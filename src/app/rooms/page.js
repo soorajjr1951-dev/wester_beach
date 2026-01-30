@@ -9,7 +9,6 @@ import { getRooms } from "../lib/rooms";
 export default function RoomsPage() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [filterType, setFilterType] = useState("ALL");
   const [sortOrder, setSortOrder] = useState("LOW_HIGH");
 
@@ -24,25 +23,18 @@ export default function RoomsPage() {
 
   const visibleRooms = useMemo(() => {
     let list = [...rooms];
-
     if (filterType !== "ALL") {
       list = list.filter((r) => r.category === filterType);
     }
-
     list.sort((a, b) =>
-      sortOrder === "LOW_HIGH"
-        ? a.price - b.price
-        : b.price - a.price
+      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price
     );
-
     return list;
   }, [rooms, filterType, sortOrder]);
 
   useScrollReveal([visibleRooms.length]);
 
-  if (loading) {
-    return <p style={{ padding: 120 }}>Loading rooms…</p>;
-  }
+  if (loading) return <p style={{ padding: 120 }}>Loading rooms…</p>;
 
   return (
     <main className="rooms-page">
@@ -53,10 +45,7 @@ export default function RoomsPage() {
             Rest in the <br />
             <span>Sublime.</span>
           </h1>
-          <p>
-            Eight uniquely commissioned chambers designed for stillness,
-            privacy, and the gentle sounds of the tides.
-          </p>
+          <p>Eight uniquely commissioned chambers by the sea.</p>
         </header>
 
         <div className="rooms-controls" data-animate>
@@ -83,43 +72,32 @@ export default function RoomsPage() {
           </div>
         </div>
 
-        {visibleRooms.length === 0 ? (
-          <p className="no-rooms">No rooms available.</p>
-        ) : (
-          <div className="rooms-list">
-            {visibleRooms.map((room, index) => (
-              <Link
-                key={room.id}
-                href={`/rooms/${room.slug}`}
-                className={`room-row-card ${index % 2 !== 0 ? "reverse" : ""}`}
-                data-animate
-              >
-                <div className="room-image">
-                  {room.preview_image ? (
-                    <img src={room.preview_image} alt={room.name} />
-                  ) : (
-                    <div className="room-image-placeholder" />
-                  )}
-                  <div className="room-type">{room.category}</div>
-                </div>
+        <div className="rooms-grid">
+          {visibleRooms.map((room) => (
+            <Link
+              key={room.id}
+              href={`/rooms/${room.slug}`}
+              className="room-card"
+              data-animate
+            >
+              <div className="room-card-image">
+                <img src={room.preview_image} alt={room.name} />
+                <span className={`badge ${room.category === "AC" ? "ac" : "non-ac"}`}>
+                  {room.category}
+                </span>
+              </div>
 
-                <div className="room-content">
-                  <div className="stars">★★★</div>
-                  <h3>{room.name}</h3>
-                  <p className="description">{room.short_description}</p>
-
-                  <div className="room-footer">
-                    <div>
-                      <span className="rate-label">Nightly rate from</span>
-                      <div className="price">₹{room.price}</div>
-                    </div>
-                    <span className="arrow-btn">→</span>
-                  </div>
+              <div className="room-card-body">
+                <h3>{room.name}</h3>
+                <p>{room.short_description}</p>
+                <div className="room-card-footer">
+                  <span>₹{room.price}</span>
+                  <span className="arrow">→</span>
                 </div>
-              </Link>
-            ))}
-          </div>
-        )}
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
     </main>
   );

@@ -9,6 +9,10 @@ export default function useScrollReveal(deps = []) {
     const elements = document.querySelectorAll("[data-animate]");
     if (!elements.length) return;
 
+    const isMobile =
+      typeof window !== "undefined" &&
+      window.matchMedia("(max-width: 900px)").matches;
+
     const observer = new IntersectionObserver(
       (entries) => {
         const currentScrollY = window.scrollY;
@@ -19,20 +23,29 @@ export default function useScrollReveal(deps = []) {
           const el = entry.target;
 
           if (entry.isIntersecting) {
-            // ✅ apply animation
-            el.classList.add("animate-in");
+            // 🚀 MOBILE: instant reveal (no delay logic)
+            if (isMobile) {
+              el.classList.add("animate-in");
+              return;
+            }
 
-            // mark direction so we can re-animate correctly
+            // 🖥 DESKTOP: keep direction-aware animation
+            el.classList.add("animate-in");
             el.dataset.revealed = scrollingDown ? "down" : "up";
           } else {
-            // ✅ allow re-animation ONLY when leaving viewport
+            // allow re-animation when leaving viewport
             el.classList.remove("animate-in");
           }
         });
       },
       {
-        threshold: 0.18,
-        rootMargin: "0px 0px -120px 0px", // prevents footer jitter
+        // ⚡ MOBILE: trigger earlier
+        threshold: isMobile ? 0.05 : 0.18,
+
+        // ⚡ MOBILE: remove bottom offset delay
+        rootMargin: isMobile
+          ? "0px 0px 0px 0px"
+          : "0px 0px -120px 0px",
       }
     );
 
