@@ -107,6 +107,7 @@ const ROOMS = [
     preview_image: "/rooms/suite-non-ac/cover.JPG",
     gallery: [
       "/rooms/suite-non-ac/2.JPG",
+      "/rooms/suite-non-ac/2.JPG",
       "/rooms/suite-non-ac/3.JPG",
       "/rooms/suite-non-ac/4.JPG",
       "/rooms/suite-non-ac/5.JPG",
