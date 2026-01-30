@@ -1,0 +1,137 @@
+/* =========================
+   PAGE BASE
+========================= */
+.spa-page {
+  background: #f3f8f5;
+  padding: 160px 40px 120px;
+}
+
+/* =========================
+   FEATURE LAYOUT
+========================= */
+.spa-feature {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+/* =========================
+   IMAGE
+========================= */
+.feature-image {
+  position: relative;
+}
+
+.feature-image img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  border-radius: 64px;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+  transition: transform 1.5s ease;
+}
+
+.feature-image:hover img {
+  transform: scale(1.03);
+}
+
+/* =========================
+   CONTENT
+========================= */
+.feature-text {
+  max-width: 520px;
+}
+
+.feature-text span {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  font-weight: 700;
+  color: #02833a;
+  text-transform: uppercase;
+}
+
+.feature-text h2 {
+  font-size: clamp(36px, 5vw, 44px);
+  font-weight: 400;
+  color: #004e64;
+  margin: 20px 0;
+}
+
+.feature-text p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #666;
+  margin-bottom: 32px;
+}
+
+/* =========================
+   PRICE
+========================= */
+.spa-price {
+  font-size: 28px;
+  font-weight: 600;
+  color: #004e64;
+  margin-bottom: 36px;
+}
+
+/* =========================
+   BOOK BUTTON
+========================= */
+.spa-book-btn {
+  display: inline-block;
+  padding: 18px 42px;
+  background: #02833a;
+  color: white;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.spa-book-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px rgba(2, 131, 58, 0.35);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .spa-feature {
+    grid-template-columns: 1fr;
+    gap: 60px;
+  }
+
+  .feature-image img {
+    height: 420px;
+    border-radius: 48px;
+  }
+
+  .feature-text {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .spa-page {
+    padding: 120px 24px 80px;
+  }
+
+  .feature-image img {
+    height: 360px;
+    border-radius: 36px;
+  }
+
+  .spa-price {
+    font-size: 24px;
+  }
+
+  .spa-book-btn {
+    width: 100%;
+    text-align: center;
+  }
+}

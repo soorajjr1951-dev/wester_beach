@@ -1,0 +1,421 @@
+/* =========================
+   BASE
+========================= */
+.spa-page {
+  background: #f3f8f5;
+  padding-top: 160px;
+  color: #0b1b12;
+}
+
+/* =========================
+   HERO
+========================= */
+.spa-hero {
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.spa-icon {
+  width: 80px;
+  height: 80px;
+  background: rgba(2, 131, 58, 0.12);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  color: #02833a;
+}
+
+.spa-hero h1 {
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 300;
+  margin: 32px 0 16px;
+  color: #004e64;
+}
+
+.spa-hero h1 span {
+  font-style: italic;
+}
+
+.spa-hero p {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #666;
+}
+
+/* =========================
+   TABS
+========================= */
+.spa-tabs {
+  background: white;
+  margin-top: 80px;
+  padding: 140px 40px;
+  border-radius: 80px 80px 0 0;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,0.05);
+}
+
+.tab-header {
+  display: flex;
+  justify-content: center;
+  gap: 80px;
+  margin-bottom: 100px;
+}
+
+.tab-header button {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #bbb;
+  padding-bottom: 16px;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab-header button.active {
+  color: #02833a;
+}
+
+.tab-header button.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 4px;
+  background: #02833a;
+  border-radius: 4px;
+}
+
+/* =========================
+   RITUAL LIST
+========================= */
+.ritual-grid {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+
+.ritual-card {
+  background: #f6efe4;
+  border-radius: 40px;
+  padding: 40px;
+  transition: all 0.4s ease;
+}
+
+.ritual-card:hover {
+  background: white;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.12);
+}
+
+.ritual-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.ritual-head span {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  font-weight: 700;
+  color: #02833a;
+  text-transform: uppercase;
+}
+
+.ritual-head h3 {
+  font-size: 22px;
+  color: #004e64;
+}
+
+.ritual-head strong {
+  font-size: 20px;
+  color: #004e64;
+}
+
+.ritual-card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #666;
+}
+
+/* FOOTER */
+.ritual-footer {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ritual-icons {
+  display: flex;
+  gap: 12px;
+  color: rgba(2, 131, 58, 0.4);
+}
+
+.ritual-card:hover .ritual-icons {
+  color: #02833a;
+}
+
+/* CTA BUTTON */
+.ritual-btn {
+  font-weight: 700;
+  color: #004e64;
+  border-bottom: 2px solid #02833a;
+  padding-bottom: 4px;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.ritual-btn:hover {
+  color: #02833a;
+}
+
+/* =========================
+   CONSULT
+========================= */
+.consult-grid {
+  max-width: 1100px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.consult-info h4 {
+  font-size: 36px;
+  color: #004e64;
+  margin-bottom: 16px;
+}
+
+.consult-info p {
+  color: #666;
+  line-height: 1.8;
+}
+
+.consult-info ul {
+  margin-top: 28px;
+  list-style: none;
+  padding: 0;
+}
+
+.consult-info li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-weight: 500;
+  color: #004e64;
+}
+
+.consult-info svg {
+  color: #02833a;
+}
+
+/* CONSULT BOX */
+.consult-box {
+  background: #f6efe4;
+  border-radius: 48px;
+  padding: 40px;
+}
+
+.consult-box h5 {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #004e64;
+}
+
+.consult-box input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: 16px;
+  border: 1px solid #e0e0e0;
+  margin-bottom: 20px;
+}
+
+.consult-box button {
+  width: 100%;
+  padding: 18px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  background: #02833a;
+  color: white;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+.consult-box p {
+  text-align: center;
+}
+
+/* =========================
+   FEATURE SECTION
+========================= */
+.spa-feature {
+  max-width: 1200px;
+  margin: auto;
+  padding: 160px 40px 120px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: center;
+}
+
+.feature-image img {
+  width: 100%;
+  height: 560px;
+  object-fit: cover;
+  border-radius: 64px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+}
+
+.feature-text span {
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  font-weight: 700;
+  color: #02833a;
+  text-transform: uppercase;
+}
+
+.feature-text h2 {
+  font-size: 44px;
+  color: #004e64;
+  margin: 20px 0;
+}
+
+.feature-text p {
+  line-height: 1.8;
+  color: #666;
+}
+
+.feature-icons {
+  display: flex;
+  gap: 32px;
+  margin-top: 28px;
+}
+
+.feature-icons div {
+  text-align: center;
+  color: #02833a;
+}
+
+.feature-icons small {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #999;
+}
+
+/* =========================
+   SPA DETAIL PAGE
+========================= */
+.spa-detail {
+  background: #f3f8f5;
+  padding: 160px 24px;
+}
+
+.spa-detail-card {
+  max-width: 900px;
+  margin: auto;
+  background: white;
+  border-radius: 56px;
+  padding: 48px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+}
+
+.spa-detail-card img {
+  width: 100%;
+  height: 480px;
+  object-fit: cover;
+  border-radius: 40px;
+  margin-bottom: 40px;
+}
+
+.spa-category {
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: #02833a;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.spa-detail-card h1 {
+  font-size: clamp(32px, 5vw, 44px);
+  color: #004e64;
+  margin: 20px 0;
+}
+
+.spa-description {
+  font-size: 16px;
+  line-height: 1.9;
+  color: #666;
+  max-width: 720px;
+  margin: auto;
+}
+
+.spa-price {
+  font-size: 28px;
+  margin: 32px 0;
+  color: #004e64;
+  font-weight: 700;
+}
+
+/* BOOK BUTTON */
+.spa-book-btn {
+  display: inline-block;
+  margin-top: 24px;
+  padding: 18px 42px;
+  background: #02833a;
+  color: white;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.spa-book-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(2, 131, 58, 0.3);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .ritual-grid,
+  .consult-grid,
+  .spa-feature {
+    grid-template-columns: 1fr;
+  }
+
+  .spa-tabs {
+    padding: 100px 24px;
+    border-radius: 60px 60px 0 0;
+  }
+
+  .spa-hero h1 {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .spa-detail-card {
+    padding: 32px;
+    border-radius: 40px;
+  }
+
+  .spa-detail-card img {
+    height: 360px;
+    border-radius: 28px;
+  }
+}
