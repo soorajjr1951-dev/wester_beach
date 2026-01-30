@@ -7,7 +7,7 @@ import useScrollReveal from "../hooks/useScrollReveal";
 import Link from "next/link";
 import { getSpaServices, getSpaFeature } from "../lib/spa";
 
-const WHATSAPP_NUMBER = "9495461894";
+const WHATSAPP_NUMBER = "7736242577";
 
 export default function SpaPage() {
   const [activeTab, setActiveTab] = useState("Rituals");

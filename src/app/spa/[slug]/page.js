@@ -6,7 +6,7 @@ import { getSpaBySlug } from "../../lib/spa";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./spa-detail.css";
 
-const WHATSAPP_NUMBER = "9495461894";
+const WHATSAPP_NUMBER = "7736242577";
 
 export default function SpaDetailPage() {
   const { slug } = useParams();

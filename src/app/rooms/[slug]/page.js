@@ -6,7 +6,7 @@ import { getRoomBySlug } from "../../lib/rooms";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./room-detail.css";
 
-const WHATSAPP_NUMBER = "9495461894";
+const WHATSAPP_NUMBER = "7736242577";
 
 export default function RoomDetailPage() {
   const { slug } = useParams();
