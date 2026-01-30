@@ -21,7 +21,7 @@ const ROOMS = [
       "/rooms/normal/5.JPG",
       "/rooms/normal/6.JPG",
       "/rooms/normal/7.JPG",
-      "/rooms/normal/8.JPG",
+      "/rooms/normal/9.JPG",
     ],
   },
 
