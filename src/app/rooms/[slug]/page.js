@@ -6,14 +6,16 @@ import { getRoomBySlug } from "../../lib/rooms";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import "./room-detail.css";
 
-const WHATSAPP_NUMBER = "7736242577";
+const WHATSAPP_NUMBER = "8129942409";
 
 export default function RoomDetailPage() {
   const { slug } = useParams();
   const [room, setRoom] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  // ✅ separate states
+  const [mainIndex, setMainIndex] = useState(0);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useScrollReveal([room]);
@@ -22,9 +24,11 @@ export default function RoomDetailPage() {
     async function fetchRoom() {
       const data = await getRoomBySlug(slug);
       setRoom(data);
-      setActiveIndex(0);
+      setMainIndex(0);
+      setLightboxIndex(0);
       setLoading(false);
     }
+
     if (slug) fetchRoom();
   }, [slug]);
 
@@ -32,24 +36,31 @@ export default function RoomDetailPage() {
   if (!room) return <p style={{ padding: 120 }}>Room not found.</p>;
 
   const gallery = room.gallery || [];
-  const visibleThumbs = gallery.slice(0, 3);
-  const extraCount = gallery.length - 3;
+
+  // ✅ thumbnails EXCLUDE main image
+  const thumbnails = gallery.filter((_, i) => i !== mainIndex).slice(0, 3);
+  const extraCount = gallery.length - 1 - thumbnails.length;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Hello 👋\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
   )}`;
 
   function openLightbox(index) {
-    setActiveIndex(index);
+    setLightboxIndex(index);
     setLightboxOpen(true);
   }
 
+  function closeLightbox() {
+    setLightboxOpen(false);
+    setLightboxIndex(mainIndex); // ✅ reset back
+  }
+
   function nextImage() {
-    setActiveIndex((prev) => (prev + 1) % gallery.length);
+    setLightboxIndex((prev) => (prev + 1) % gallery.length);
   }
 
   function prevImage() {
-    setActiveIndex((prev) =>
+    setLightboxIndex((prev) =>
       prev === 0 ? gallery.length - 1 : prev - 1
     );
   }
@@ -71,27 +82,32 @@ export default function RoomDetailPage() {
 
           {/* GALLERY */}
           <section className="room-gallery">
+            {/* MAIN IMAGE */}
             <div
               className="room-gallery-main"
-              onClick={() => openLightbox(activeIndex)}
+              onClick={() => openLightbox(mainIndex)}
             >
-              <img src={gallery[activeIndex]} alt={room.name} />
+              <img src={gallery[mainIndex]} alt={room.name} />
             </div>
 
+            {/* THUMBNAILS */}
             <div className="room-gallery-grid">
-              {visibleThumbs.map((img, i) => (
-                <div
-                  key={i}
-                  className="thumb-wrapper"
-                  onClick={() => openLightbox(i)}
-                >
-                  <img src={img} alt={`Thumb ${i}`} />
+              {thumbnails.map((img, i) => {
+                const actualIndex = gallery.indexOf(img);
+                return (
+                  <div
+                    key={actualIndex}
+                    className="thumb-wrapper"
+                    onClick={() => openLightbox(actualIndex)}
+                  >
+                    <img src={img} alt={`Thumbnail ${i}`} />
 
-                  {i === 2 && extraCount > 0 && (
-                    <div className="more-overlay">+{extraCount}</div>
-                  )}
-                </div>
-              ))}
+                    {i === thumbnails.length - 1 && extraCount > 0 && (
+                      <div className="more-overlay">+{extraCount}</div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </section>
 
@@ -118,7 +134,7 @@ export default function RoomDetailPage() {
       {/* LIGHTBOX */}
       {lightboxOpen && (
         <div className="lightbox">
-          <button className="lightbox-close" onClick={() => setLightboxOpen(false)}>
+          <button className="lightbox-close" onClick={closeLightbox}>
             ×
           </button>
 
@@ -127,7 +143,7 @@ export default function RoomDetailPage() {
           </button>
 
           <img
-            src={gallery[activeIndex]}
+            src={gallery[lightboxIndex]}
             alt="Room Preview"
             className="lightbox-image"
           />

@@ -105,9 +105,9 @@ const ROOMS = [
       "Designed for those who prefer natural airflow, the Non-AC Suite Room delivers luxury with an earthy coastal feel.",
     preview_image: "/rooms/suite-non-ac/cover.JPG",
     gallery: [
+      "/rooms/suite-non-ac/cover.JPG",
+      "/rooms/suite-non-ac/9.JPG",
       "/rooms/suite-non-ac/2.JPG",
-      "/rooms/suite-non-ac/2.JPG",
-      "/rooms/suite-non-ac/3.JPG",
       "/rooms/suite-non-ac/4.JPG",
       "/rooms/suite-non-ac/5.JPG",
       "/rooms/suite-non-ac/6.JPG",
