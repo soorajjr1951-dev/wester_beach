@@ -69,7 +69,8 @@
 .navbar-links a,
 .navbar-links button {
   background: none;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: var(--font-primary);
+  font-weight: 400;
   border: none;
   padding: 0;              /* remove default button padding */
   margin: 0;

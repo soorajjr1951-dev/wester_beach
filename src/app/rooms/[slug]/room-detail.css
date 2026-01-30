@@ -87,6 +87,7 @@
   height: 560px;
   scale: 1.05;
   object-fit: cover;
+  scale: 1.2;
 }
 
 .room-gallery-grid {
@@ -105,6 +106,13 @@
   object-fit: cover;
   border-radius: 32px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.thumb-wrapper img:hover {
+  scale: 1.005;
+  transform: translateY(-6px);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.15);
 }
 
 .more-overlay {
@@ -185,27 +193,6 @@
   cursor: pointer;
 }
 
-/* ==============================
-   RESPONSIVE
-============================== */
-@media (max-width: 900px) {
-  .room-detail-card {
-    padding: 40px;
-    border-radius: 40px;
-  }
-
-  .room-gallery {
-    grid-template-columns: 1fr;
-  }
-
-  .room-gallery-main img {
-    height: 420px;
-  }
-
-  .thumb-wrapper img {
-    height: 140px;
-  }
-}
 
 
 /* ==============================
@@ -258,26 +245,135 @@
   right: 40px;
 }
 
-@media (max-width: 768px) {
-  .room-detail-card {
-    padding: 32px;
+/* ==============================
+   MOBILE REDESIGN – ROOM DETAIL
+============================== */
+@media (max-width: 900px) {
+  .room-detail {
+    padding: 120px 0 100px;
   }
 
+  .room-detail-container {
+    padding: 0 20px;
+  }
+
+  .room-detail-card {
+    padding: 32px 24px;
+    border-radius: 32px;
+  }
+
+  /* HEADER */
+  .room-detail-header {
+    max-width: 100%;
+    margin-bottom: 48px;
+  }
+
+  .room-detail-header h1 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  .room-detail-header p {
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  .room-price {
+    font-size: 26px;
+    margin-top: 16px;
+  }
+
+  /* ==============================
+     GALLERY – CLEAN GRID
+  ============================== */
   .room-gallery {
+    display: grid;
     grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 64px;
+  }
+
+  .room-gallery-main img {
+    height: 360px;
+    border-radius: 28px;
   }
 
   .room-gallery-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .thumb-wrapper img {
     height: 140px;
+    border-radius: 20px;
   }
 
+  /* ==============================
+     DESCRIPTION
+  ============================== */
+  .room-description {
+    max-width: 100%;
+    margin-top: 32px;
+  }
+
+  .room-description h2 {
+    font-size: 32px;
+    margin-bottom: 16px;
+  }
+
+  .room-description p {
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ==============================
+     CTA – FULL WIDTH
+  ============================== */
   .whatsapp-btn {
     display: block;
-    text-align: center;
     width: 100%;
+    text-align: center;
+    margin-top: 40px;
+    padding: 18px;
+    font-size: 12px;
+  }
+
+  /* ==============================
+     LIGHTBOX UX
+  ============================== */
+  .lightbox-close {
+    top: 16px;
+    right: 16px;
+    font-size: 36px;
+  }
+
+  .lightbox-nav {
+    font-size: 48px;
+  }
+
+  .lightbox-nav.left {
+    left: 12px;
+  }
+
+  .lightbox-nav.right {
+    right: 12px;
+  }
+}
+
+/* ==============================
+   SMALL PHONES (≤480px)
+============================== */
+@media (max-width: 480px) {
+  .room-detail-header h1 {
+    font-size: 34px;
+  }
+
+  .room-gallery-main img {
+    height: 300px;
+  }
+
+  .thumb-wrapper img {
+    height: 120px;
   }
 }

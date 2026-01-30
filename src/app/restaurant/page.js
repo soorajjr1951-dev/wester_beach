@@ -21,7 +21,7 @@ export default function RestaurantPage() {
         <div className="restaurant-hero-content" data-animate="fade">
           <span className="restaurant-eyebrow">Ocean to Plate</span>
           <h1>
-            The Deck <br />
+            The Best <br />
             <span>Kitchen.</span>
           </h1>
           <p>
