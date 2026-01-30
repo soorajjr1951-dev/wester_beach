@@ -60,7 +60,7 @@ const ROOMS = [
       "Perfect for guests who enjoy fresh sea air, our Super Deluxe Non-AC rooms provide spacious interiors with thoughtful design.",
     preview_image: "/rooms/delux-non-ac/cover.JPG",
     gallery: [
-      "/rooms/delux-non-ac/1.JPG",
+      "/rooms/delux-non-ac/cover.JPG",
       "/rooms/delux-non-ac/2.JPG",
       "/rooms/delux-non-ac/3.JPG",
       "/rooms/delux-non-ac/4.JPG",
