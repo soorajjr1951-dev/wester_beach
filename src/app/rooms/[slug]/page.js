@@ -27,31 +27,12 @@ export default function RoomDetailPage() {
   if (!room) return <p style={{ padding: 120 }}>Room not found.</p>;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello 👋\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
+    `Hello 👋\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`,
   )}`;
 
   return (
     <main className="room-detail-page">
       <section className="room-detail-grid" data-animate>
-        {/* GALLERY */}
-        <div className="room-gallery">
-          <div className="room-gallery-main">
-            <img src={activeImage} alt={room.name} />
-          </div>
-
-          <div className="room-gallery-thumbs">
-            {room.gallery.map((img, i) => (
-              <button
-                key={i}
-                className={`thumb ${activeImage === img ? "active" : ""}`}
-                onClick={() => setActiveImage(img)}
-              >
-                <img src={img} alt={`${room.name} ${i}`} />
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* CONTENT */}
         <div className="room-detail-content">
           <span className="room-category">{room.category}</span>
@@ -73,6 +54,25 @@ export default function RoomDetailPage() {
           >
             Book via WhatsApp →
           </a>
+        </div>
+
+        {/* GALLERY */}
+        <div className="room-gallery">
+          <div className="room-gallery-main">
+            <img src={activeImage} alt={room.name} />
+          </div>
+
+          <div className="room-gallery-thumbs">
+            {room.gallery.map((img, i) => (
+              <button
+                key={i}
+                className={`thumb ${activeImage === img ? "active" : ""}`}
+                onClick={() => setActiveImage(img)}
+              >
+                <img src={img} alt={`${room.name} ${i}`} />
+              </button>
+            ))}
+          </div>
         </div>
       </section>
     </main>
