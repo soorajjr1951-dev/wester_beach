@@ -11,46 +11,48 @@ const WHATSAPP_NUMBER = "8129942409";
 export default function SpaDetailPage() {
   const { slug } = useParams();
   const [service, setService] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      const data = await getSpaBySlug(slug);
-      setService(data);
-      setLoading(false);
-    }
-
-    if (slug) fetchData();
+    const data = getSpaBySlug(slug);
+    setService(data);
+    setActiveImage(data?.gallery?.[0]);
   }, [slug]);
 
-  useScrollReveal([service]);
+  useScrollReveal([service, activeImage]);
 
-  if (loading) {
-    return <p style={{ padding: 120 }}>Loading treatment…</p>;
-  }
-
-  if (!service) {
-    return <p style={{ padding: 120 }}>Treatment not found.</p>;
-  }
+  if (!service) return <p style={{ padding: 120 }}>Treatment not found.</p>;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Hello 👋\n\nI would like to book the *${service.name}*.\nPrice: ₹${service.price}.`
   )}`;
 
   return (
-    <main className="spa-page">
-      <section className="spa-feature" data-animate>
-        {/* IMAGE */}
-        <div className="feature-image" data-animate="left">
-          <img src={service.image} alt={service.name} />
+    <main className="spa-detail-page">
+      <section className="spa-detail-grid" data-animate>
+        {/* GALLERY */}
+        <div className="spa-gallery">
+          <div className="spa-gallery-main">
+            <img src={activeImage} alt={service.name} />
+          </div>
+
+          <div className="spa-gallery-thumbs">
+            {service.gallery.map((img, i) => (
+              <button
+                key={i}
+                className={`thumb ${activeImage === img ? "active" : ""}`}
+                onClick={() => setActiveImage(img)}
+              >
+                <img src={img} alt={`${service.name} ${i}`} />
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* CONTENT */}
-        <div className="feature-text" data-animate="right">
-          <span>{service.category}</span>
-
-          <h2>{service.name}</h2>
-
+        <div className="spa-detail-content">
+          <span className="spa-category">{service.category}</span>
+          <h1>{service.name}</h1>
           <p>{service.long_description}</p>
 
           <div className="spa-price">₹{service.price}</div>

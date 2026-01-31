@@ -1,5 +1,3 @@
-// lib/spa.js
-
 const SPA_SERVICES = [
   {
     id: 1,
@@ -7,38 +5,48 @@ const SPA_SERVICES = [
     category: "Foot Care",
     name: "Pedicure",
     description:
-      "A rejuvenating foot treatment including exfoliation, massage, and nail care to soften and beautify your feet.",
+      "A rejuvenating foot treatment including exfoliation, massage, and nail care.",
     long_description:
       "Our Pedicure service includes foot soaking, exfoliation, cuticle care, massage, and polish application. It leaves your feet soft, relaxed, and beautifully groomed.",
     price: 2500,
-    image:
-      "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200&auto=format&fit=crop",
+
+    gallery: [
+      "https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200",
+      "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=1200",
+    ],
   },
+
   {
     id: 2,
     slug: "head-wash",
     category: "Hair Care",
     name: "Head Wash",
     description:
-      "A therapeutic scalp cleansing and massage to rejuvenate your hair and relieve tension.",
+      "A therapeutic scalp cleansing and massage to rejuvenate your hair.",
     long_description:
-      "Our Head Wash service includes deep scalp cleansing, soothing massage, and herbal treatments to promote hair health, improve circulation, and provide relaxation.",
+      "Deep scalp cleansing, soothing massage, and herbal treatments to promote hair health and relaxation.",
     price: 1500,
-    image:
-      "https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=1200&auto=format&fit=crop",
+
+    gallery: [
+      "https://images.unsplash.com/photo-1600334129128-685c5582fd35?q=80&w=1200",
+      "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1200",
+    ],
   },
+
   {
     id: 3,
     slug: "fish-spa",
     category: "Therapy",
     name: "Fish Spa",
     description:
-      "A gentle aquatic therapy where fish nibble away dead skin for natural exfoliation.",
+      "A gentle aquatic therapy where fish exfoliate dead skin.",
     long_description:
-      "Fish Spa is a unique and relaxing treatment where small fish gently exfoliate and remove dead skin cells, leaving your skin soft, rejuvenated, and refreshed.",
+      "A unique and relaxing treatment where small fish gently remove dead skin cells, leaving your skin soft and refreshed.",
     price: 2800,
-    image:
-      "https://images.unsplash.com/photo-1622445272461-c6580cab8755?q=80&w=1200&auto=format&fit=crop",
+
+    gallery: [
+      "https://images.unsplash.com/photo-1622445272461-c6580cab8755?q=80&w=1200",
+    ],
   },
 ];
 
@@ -49,6 +57,7 @@ export function getSpaServices() {
 export function getSpaBySlug(slug) {
   return SPA_SERVICES.find((s) => s.slug === slug) || null;
 }
+
 
 /* FEATURE DATA */
 export function getSpaFeature() {

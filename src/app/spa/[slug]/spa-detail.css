@@ -1,84 +1,122 @@
 /* =========================
    PAGE BASE
 ========================= */
-.spa-page {
+.spa-detail-page {
   background: #f3f8f5;
-  padding: 160px 40px 120px;
+  padding: 160px 40px;
 }
 
 /* =========================
-   FEATURE LAYOUT
+   GRID LAYOUT
 ========================= */
-.spa-feature {
-  max-width: 1200px;
+.spa-detail-grid {
+  max-width: 1400px;
   margin: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1.1fr 0.9fr;
   gap: 100px;
   align-items: center;
 }
 
 /* =========================
-   IMAGE
+   GALLERY
 ========================= */
-.feature-image {
-  position: relative;
+.spa-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
-.feature-image img {
+.spa-gallery-main {
   width: 100%;
-  height: 560px;
-  object-fit: cover;
-  border-radius: 64px;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
-  transition: transform 1.5s ease;
+  height: 520px;
+  border-radius: 48px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.25);
 }
 
-.feature-image:hover img {
-  transform: scale(1.03);
+.spa-gallery-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.8s ease;
+}
+
+.spa-gallery-main:hover img {
+  transform: scale(1.05);
+}
+
+/* THUMBNAILS */
+.spa-gallery-thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.thumb {
+  border: none;
+  padding: 0;
+  background: none;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.thumb img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+}
+
+.thumb:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.thumb.active {
+  opacity: 1;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
 }
 
 /* =========================
    CONTENT
 ========================= */
-.feature-text {
-  max-width: 520px;
+.spa-detail-content {
+  max-width: 480px;
 }
 
-.feature-text span {
+.spa-category {
   font-size: 10px;
-  letter-spacing: 0.4em;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
   font-weight: 700;
   color: #02833a;
-  text-transform: uppercase;
 }
 
-.feature-text h2 {
-  font-size: clamp(36px, 5vw, 44px);
+.spa-detail-content h1 {
+  font-size: clamp(36px, 5vw, 52px);
   font-weight: 400;
   color: #004e64;
-  margin: 20px 0;
+  margin: 24px 0;
 }
 
-.feature-text p {
+.spa-detail-content p {
   font-size: 16px;
   line-height: 1.9;
   color: #666;
-  margin-bottom: 32px;
 }
 
-/* =========================
-   PRICE
-========================= */
 .spa-price {
+  margin: 32px 0;
   font-size: 28px;
-  font-weight: 600;
+  font-weight: 700;
   color: #004e64;
-  margin-bottom: 36px;
 }
 
 /* =========================
-   BOOK BUTTON
+   CTA
 ========================= */
 .spa-book-btn {
   display: inline-block;
@@ -88,8 +126,7 @@
   border-radius: 999px;
   text-decoration: none;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .spa-book-btn:hover {
@@ -101,37 +138,16 @@
    RESPONSIVE
 ========================= */
 @media (max-width: 900px) {
-  .spa-feature {
+  .spa-detail-grid {
     grid-template-columns: 1fr;
     gap: 60px;
   }
 
-  .feature-image img {
+  .spa-gallery-main {
     height: 420px;
-    border-radius: 48px;
   }
 
-  .feature-text {
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 600px) {
-  .spa-page {
-    padding: 120px 24px 80px;
-  }
-
-  .feature-image img {
-    height: 360px;
-    border-radius: 36px;
-  }
-
-  .spa-price {
-    font-size: 24px;
-  }
-
-  .spa-book-btn {
-    width: 100%;
-    text-align: center;
+  .spa-gallery-thumbs {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
