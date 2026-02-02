@@ -5,18 +5,18 @@ import { Sparkles, Leaf, Droplets, Wind, CheckCircle } from "lucide-react";
 import "./spa.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import Link from "next/link";
-import { getSpaServices, SPA_FEATURE } from "../../lib/spa";
+import { getSpaServices, getSpaFeature } from "../../lib/spa";
 
 const WHATSAPP_NUMBER = "8129942409";
 
 export default function SpaPage() {
   const [activeTab, setActiveTab] = useState("Rituals");
   const [services, setServices] = useState([]);
+  const feature = getSpaFeature(); // ✅ static, instant
 
   useEffect(() => {
     async function load() {
-      const data = await getSpaServices();
-      setServices(data);
+      setServices(await getSpaServices());
     }
     load();
   }, []);
@@ -92,8 +92,8 @@ export default function SpaPage() {
             <div className="consult-info">
               <h4>Personalized Healing.</h4>
               <p>
-                Every journey begins with an assessment of your Prakriti (Dosha
-                type). Our resident Ayurvedic doctor will curate your program.
+                Every journey begins with a Dosha assessment by our resident
+                Ayurvedic doctor.
               </p>
 
               <ul>
@@ -113,39 +113,29 @@ export default function SpaPage() {
 
             <div className="consult-box">
               <h5>Book Initial Consultation</h5>
-              <a
-                href={consultWhatsapp}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a href={consultWhatsapp} target="_blank">
                 <button>Schedule Doctor Call</button>
               </a>
-              <p>Consultation fee: ₹1,500 (Adjustable according treatments)</p>
+              <p>Consultation fee: ₹1,500</p>
             </div>
           </div>
         )}
       </section>
 
-      {/* SPA FEATURE (STATIC) */}
+      {/* FEATURE */}
       <section className="spa-feature" data-animate>
-        <div className="feature-image" data-animate="left">
-          <img src={SPA_FEATURE.image} alt={SPA_FEATURE.title} />
+        <div className="feature-image">
+          <img src={feature.image} alt={feature.title} />
         </div>
 
-        <div className="feature-text" data-animate="right">
+        <div className="feature-text">
           <span>Signature Feature</span>
-          <h2>{SPA_FEATURE.title}</h2>
-          <p>{SPA_FEATURE.description}</p>
+          <h2>{feature.title}</h2>
+          <p>{feature.description}</p>
 
           <div className="feature-icons">
-            <div>
-              <Sparkles />
-              <small>Rejuvenate</small>
-            </div>
-            <div>
-              <Droplets />
-              <small>Detox</small>
-            </div>
+            <div><Sparkles /><small>Rejuvenate</small></div>
+            <div><Droplets /><small>Detox</small></div>
           </div>
         </div>
       </section>
