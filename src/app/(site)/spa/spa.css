@@ -419,3 +419,23 @@
     border-radius: 28px;
   }
 }
+
+.spa-feature {
+  background: #fff;
+  color: #111;
+}
+
+.spa-feature h2,
+.spa-feature p,
+.spa-feature span {
+  color: #111;
+}
+
+.feature-text {
+  position: relative;
+  z-index: 2;
+}
+
+.spa-feature::before {
+  display: none;
+}

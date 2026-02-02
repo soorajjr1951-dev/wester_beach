@@ -6,26 +6,23 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 export async function getRestaurantDishes() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-dishes?populate[dishes_image]=*`,
+      `${STRAPI_URL}/api/restaurant-dishes?populate=image&sort=name:asc`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) {
-      const t = await res.text();
-      console.error("Dishes API response:", t);
-      throw new Error("Failed to fetch dishes");
-    }
+    if (!res.ok) throw new Error("Failed to fetch dishes");
 
     const json = await res.json();
 
     return Array.isArray(json.data)
       ? json.data.map((item) => {
-          const d = item.attributes ?? {};
+          const d = item.attributes;
           return {
-            name: d.dishes_name ?? "",
-            price: d.dishes_price ?? "",
-            image: d.dishes_image?.data?.attributes?.url
-              ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
+            id: item.id,
+            name: d.name ?? "",
+            price: d.price ?? "",
+            image: d.image?.data?.attributes?.url
+              ? `${STRAPI_URL}${d.image.data.attributes.url}`
               : "/placeholder-dish.jpg",
           };
         })
@@ -42,23 +39,21 @@ export async function getRestaurantDishes() {
 export async function getRestaurantAmbience() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-ambiences?populate[ambience_gallery]=*`,
+      `${STRAPI_URL}/api/restaurant-ambiences?populate=gallery`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) {
-      const t = await res.text();
-      console.error("Ambience API response:", t);
-      throw new Error("Failed to fetch ambience");
-    }
+    if (!res.ok) throw new Error("Failed to fetch ambience");
 
     const json = await res.json();
 
-    return Array.isArray(json.data)
-      ? json.data.flatMap((item) =>
-          item.attributes?.ambience_gallery?.data?.map(
-            (img) => `${STRAPI_URL}${img.attributes.url}`
-          ) || []
+    if (!json.data?.length) return [];
+
+    const a = json.data[0].attributes;
+
+    return Array.isArray(a.gallery?.data)
+      ? a.gallery.data.map(
+          (img) => `${STRAPI_URL}${img.attributes.url}`
         )
       : [];
   } catch (err) {

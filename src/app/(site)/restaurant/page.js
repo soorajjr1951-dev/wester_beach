@@ -17,14 +17,10 @@ export default function RestaurantPage() {
 
   useEffect(() => {
     async function load() {
-      const dishesData = await getRestaurantDishes();
-      const ambienceData = await getRestaurantAmbience();
-
-      setDishes(dishesData);
-      setAmbience(ambienceData);
-      setLoaded(true); // 🔑 NEVER forget this
+      setDishes(await getRestaurantDishes());
+      setAmbience(await getRestaurantAmbience());
+      setLoaded(true);
     }
-
     load();
   }, []);
 
@@ -91,7 +87,7 @@ export default function RestaurantPage() {
 
             <div className="ambience-images" data-animate="right">
               {ambience.map((img, i) => (
-                <img key={i} src={img} alt={`Dining view ${i + 1}`} />
+                <img key={i} src={img} alt={`Dining ${i + 1}`} />
               ))}
             </div>
           </div>

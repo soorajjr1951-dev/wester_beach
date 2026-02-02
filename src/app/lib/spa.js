@@ -67,7 +67,7 @@ export async function getSpaFeature() {
     console.error("getSpaFeature error:", e);
     return {
       title: "Ayurvedic Rejuvenation",
-      description: "",
+      description: "A deeply restorative therapy combining Abhyanga, Shirodhara and herbal steam to realign body and mind.",
       image: "/spa/spa-feature.jpg",
     };
   }
