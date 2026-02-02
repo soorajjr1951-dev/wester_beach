@@ -55,7 +55,7 @@ export default function RestaurantPage() {
               <img src={dish.image} alt={dish.name} />
               <div className="dish-info">
                 <h4>{dish.name}</h4>
-                <span>{dish.price}</span>
+                <span>₹{dish.price}</span>
               </div>
             </div>
           ))}
@@ -75,7 +75,7 @@ export default function RestaurantPage() {
           </div>
 
           <div className="ambience-images" data-animate="right">
-            {ambience.images.map((img, i) => (
+            {ambience.map((img, i) => (
               <img key={i} src={img} alt={`Dining view ${i + 1}`} />
             ))}
           </div>
