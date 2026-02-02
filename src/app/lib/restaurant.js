@@ -1,53 +1,61 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
-   GET DISHES
+   RESTAURANT DISHES
 ========================= */
 export async function getRestaurantDishes() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-dishes?populate=image`,
+      `${STRAPI_URL}/api/restaurant-pages?populate[dishes][populate]=dishes_image`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) return [];
+    if (!res.ok) throw new Error("Failed to fetch dishes");
 
     const json = await res.json();
+    const page = json.data?.[0];
+    if (!page) return [];
 
-    return json.data.map((item) => ({
-      id: item.id,
-      name: item.attributes.name,
-      price: item.attributes.price,
-      image: item.attributes.image?.data
-        ? `${STRAPI_URL}${item.attributes.image.data.attributes.url}`
+    const dishes = page.attributes?.dishes ?? [];
+
+    return dishes.map((d, index) => ({
+      id: index,
+      name: d.dishes_name ?? "",
+      price: d.dishes_price ?? "",
+      image: d.dishes_image?.data?.attributes?.url
+        ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
         : "/placeholder-dish.jpg",
     }));
-  } catch (e) {
-    console.error("getRestaurantDishes error:", e);
+  } catch (error) {
+    console.error("getRestaurantDishes error:", error);
     return [];
   }
 }
 
 /* =========================
-   GET AMBIENCE
+   RESTAURANT AMBIENCE
 ========================= */
 export async function getRestaurantAmbience() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-ambiences?populate=gallery`,
+      `${STRAPI_URL}/api/restaurant-pages?populate[ambience][populate]=ambience_gallery`,
       { cache: "no-store" }
     );
 
-    const json = await res.json();
-    const a = json.data?.[0]?.attributes;
+    if (!res.ok) throw new Error("Failed to fetch ambience");
 
-    return Array.isArray(a?.gallery?.data)
-      ? a.gallery.data.map(
-          (img) => `${STRAPI_URL}${img.attributes.url}`
-        )
-      : [];
-  } catch (e) {
-    console.error("getRestaurantAmbience error:", e);
+    const json = await res.json();
+    const page = json.data?.[0];
+    if (!page) return [];
+
+    const gallery =
+      page.attributes?.ambience?.ambience_gallery?.data ?? [];
+
+    return gallery.map(
+      (img) => `${STRAPI_URL}${img.attributes.url}`
+    );
+  } catch (error) {
+    console.error("getRestaurantAmbience error:", error);
     return [];
   }
 }

@@ -14,12 +14,20 @@ export default function SpaPage() {
   const [services, setServices] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  const feature = getSpaFeature(); // 🔥 instant, no CMS dependency
+  // 🔥 STATIC FEATURE (NO STRAPI DEPENDENCY)
+  const feature = getSpaFeature();
 
   useEffect(() => {
     async function load() {
-      setServices(await getSpaServices());
-      setLoaded(true); // ALWAYS END
+      try {
+        const data = await getSpaServices();
+        setServices(Array.isArray(data) ? data : []);
+      } catch (e) {
+        console.error("SpaPage load error:", e);
+        setServices([]);
+      } finally {
+        setLoaded(true); // 🔑 ALWAYS END LOADING
+      }
     }
     load();
   }, []);
@@ -31,7 +39,7 @@ export default function SpaPage() {
   }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book an Ayurvedic doctor consultation.`,
+    "Hello,\n\nI would like to book an Ayurvedic doctor consultation."
   )}`;
 
   return (
@@ -122,7 +130,7 @@ export default function SpaPage() {
 
             <div className="consult-box">
               <h5>Book Consultation</h5>
-              <a href={consultWhatsapp} target="_blank">
+              <a href={consultWhatsapp} target="_blank" rel="noreferrer">
                 <button>Schedule Doctor Call</button>
               </a>
               <p>Consultation fee: ₹1,500</p>
