@@ -1,30 +1,7 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
-   NORMALIZE SPA SERVICE
-========================= */
-function normalizeSpa(item) {
-  const s = item.attributes ?? item;
-
-  return {
-    id: item.id,
-    name: s.name,
-    slug: s.slug,
-    category: s.category,
-    price: s.price,
-    description: s.description,
-    long_description: s.long_description,
-
-    gallery: Array.isArray(s.gallery?.data)
-      ? s.gallery.data.map(
-          (img) => `${STRAPI_URL}${img.attributes.url}`
-        )
-      : [],
-  };
-}
-
-/* =========================
-   GET ALL SPA SERVICES
+   GET SPA SERVICES
 ========================= */
 export async function getSpaServices() {
   try {
@@ -36,9 +13,30 @@ export async function getSpaServices() {
     if (!res.ok) throw new Error("Failed to fetch spa services");
 
     const json = await res.json();
-    return json.data.map(normalizeSpa);
-  } catch (error) {
-    console.error("getSpaServices error:", error);
+
+    return Array.isArray(json.data)
+      ? json.data.map((item) => {
+          const a = item.attributes;
+
+          return {
+            id: item.id,
+            name: a.name,
+            slug: a.slug,
+            category: a.category,
+            price: a.price,
+            description: a.description,
+            long_description: a.long_description,
+
+            gallery: Array.isArray(a.gallery?.data)
+              ? a.gallery.data.map(
+                  (img) => `${STRAPI_URL}${img.attributes.url}`
+                )
+              : [],
+          };
+        })
+      : [];
+  } catch (err) {
+    console.error("getSpaServices error:", err);
     return [];
   }
 }
@@ -56,23 +54,57 @@ export async function getSpaBySlug(slug) {
     if (!res.ok) throw new Error("Spa not found");
 
     const json = await res.json();
-    if (!json.data.length) return null;
+    if (!json.data?.length) return null;
 
-    return normalizeSpa(json.data[0]);
-  } catch (error) {
-    console.error("getSpaBySlug error:", error);
+    const item = json.data[0];
+    const a = item.attributes;
+
+    return {
+      id: item.id,
+      name: a.name,
+      slug: a.slug,
+      category: a.category,
+      price: a.price,
+      description: a.description,
+      long_description: a.long_description,
+
+      gallery: Array.isArray(a.gallery?.data)
+        ? a.gallery.data.map(
+            (img) => `${STRAPI_URL}${img.attributes.url}`
+          )
+        : [],
+    };
+  } catch (err) {
+    console.error("getSpaBySlug error:", err);
     return null;
   }
 }
 
 /* =========================
-   STATIC SPA FEATURE (NO CMS)
+   GET SPA FEATURE (CMS)
 ========================= */
-export function getSpaFeature() {
-  return {
-    title: "Signature Ayurvedic Rejuvenation",
-    description:
-      "Our signature therapy blends Abhyanga, Shirodhara, and herbal steam to detoxify the body, calm the nervous system, and restore inner balance using time-honored Keralan traditions.",
-    image: "/spa/spa-feature.jpg", // ✅ put image in /public
-  };
+export async function getSpaFeature() {
+  try {
+    const res = await fetch(
+      `${STRAPI_URL}/api/spa-features?populate=feature_image`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch spa feature");
+
+    const json = await res.json();
+    const f = json.data?.[0]?.attributes;
+    if (!f) return null;
+
+    return {
+      title: f.title,
+      description: f.description,
+      image: f.feature_image?.data?.attributes?.url
+        ? `${STRAPI_URL}${f.feature_image.data.attributes.url}`
+        : "/spa/spa-feature.jpg",
+    };
+  } catch (err) {
+    console.error("getSpaFeature error:", err);
+    return null;
+  }
 }
