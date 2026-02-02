@@ -1,12 +1,12 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
-   GET RESTAURANT DISHES
+   RESTAURANT DISHES
 ========================= */
 export async function getRestaurantDishes() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-dishes?populate=image&sort=name:asc`,
+      `${STRAPI_URL}/api/restaurant-dishes?populate=image`,
       { cache: "no-store" }
     );
 
@@ -16,7 +16,9 @@ export async function getRestaurantDishes() {
 
     return Array.isArray(json.data)
       ? json.data.map((item) => {
-          const d = item.attributes;
+          const d = item?.attributes;
+          if (!d) return null;
+
           return {
             id: item.id,
             name: d.name ?? "",
@@ -25,7 +27,7 @@ export async function getRestaurantDishes() {
               ? `${STRAPI_URL}${d.image.data.attributes.url}`
               : "/placeholder-dish.jpg",
           };
-        })
+        }).filter(Boolean)
       : [];
   } catch (err) {
     console.error("getRestaurantDishes error:", err);
@@ -34,7 +36,7 @@ export async function getRestaurantDishes() {
 }
 
 /* =========================
-   GET RESTAURANT AMBIENCE
+   RESTAURANT AMBIENCE
 ========================= */
 export async function getRestaurantAmbience() {
   try {
@@ -50,6 +52,7 @@ export async function getRestaurantAmbience() {
     if (!json.data?.length) return [];
 
     const a = json.data[0].attributes;
+    if (!a) return [];
 
     return Array.isArray(a.gallery?.data)
       ? a.gallery.data.map(
