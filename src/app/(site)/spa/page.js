@@ -6,10 +6,12 @@ import "./spa.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import Link from "next/link";
 import { getSpaServices, getSpaFeature } from "../../lib/spa";
+import useScrollToTop from "@/app/hooks/useScrollToTop";
 
 const WHATSAPP_NUMBER = "8129942409";
 
 export default function SpaPage() {
+  useScrollToTop();
   const [activeTab, setActiveTab] = useState("Rituals");
   const [services, setServices] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -142,8 +144,7 @@ export default function SpaPage() {
       {/* FEATURE */}
       <section className="spa-feature" data-animate>
         <div className="feature-image">
-          <img src={feature.image} alt={feature.title} 
-          loading="lazy"/>
+          <img src={feature.image} alt={feature.title} />
         </div>
 
         <div className="feature-text">

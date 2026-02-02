@@ -1,26 +1,40 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export default function useScrollReveal(deps = []) {
+  const lastScrollY = useRef(0);
+
   useEffect(() => {
+    if (typeof window === "undefined") return;
+
     const elements = document.querySelectorAll("[data-animate]");
     if (!elements.length) return;
 
+    const isMobile = window.matchMedia("(max-width: 900px)").matches;
+
     const observer = new IntersectionObserver(
       (entries) => {
+        const currentScrollY = window.scrollY;
+        const scrollingDown = currentScrollY > lastScrollY.current;
+        lastScrollY.current = currentScrollY;
+
         entries.forEach((entry) => {
+          const el = entry.target;
+
+          // 🔒 If already revealed once → NEVER reset
+          if (el.dataset.revealed === "true") return;
+
           if (entry.isIntersecting) {
-            entry.target.classList.add("animate-in");
-          } else {
-            // 👇 THIS is the key change
-            entry.target.classList.remove("animate-in");
+            el.classList.add("animate-in");
+            el.dataset.revealed = "true"; // 🔥 lock animation
+            observer.unobserve(el); // 🧠 free memory
           }
         });
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px 0px -120px 0px",
+        threshold: isMobile ? 0.08 : 0.15,
+        rootMargin: isMobile ? "0px" : "0px 0px -120px 0px",
       }
     );
 

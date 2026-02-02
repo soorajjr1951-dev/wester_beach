@@ -5,8 +5,10 @@ import Link from "next/link";
 import "./rooms.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import { getRooms } from "../../lib/rooms";
+import useScrollToTop from "@/app/hooks/useScrollToTop";
 
 export default function RoomsPage() {
+  useScrollToTop();
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState("ALL");
