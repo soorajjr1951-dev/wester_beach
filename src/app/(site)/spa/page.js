@@ -18,9 +18,8 @@ export default function SpaPage() {
 
   useEffect(() => {
     async function load() {
-      const data = await getSpaServices();
-      setServices(data);
-      setLoaded(true); // 🔑 always end loading
+      setServices(await getSpaServices());
+      setLoaded(true); // ALWAYS END
     }
     load();
   }, []);
@@ -32,7 +31,7 @@ export default function SpaPage() {
   }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book an Ayurvedic doctor consultation.`
+    `Hello,\n\nI would like to book an Ayurvedic doctor consultation.`,
   )}`;
 
   return (

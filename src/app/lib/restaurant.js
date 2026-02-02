@@ -1,37 +1,53 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-export async function getRestaurantContent() {
+/* =========================
+   GET DISHES
+========================= */
+export async function getRestaurantDishes() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-pages?populate[dishes][populate]=dishes_image&populate[ambience][populate]=ambience_gallery`,
+      `${STRAPI_URL}/api/restaurant-dishes?populate=image`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) return null;
+    if (!res.ok) return [];
 
     const json = await res.json();
-    const page = json.data?.[0]?.attributes;
-    if (!page) return null;
 
-    const dishes = Array.isArray(page.dishes)
-      ? page.dishes.map((d) => ({
-          name: d.dishes_name ?? "",
-          price: d.dishes_price ?? "",
-          image: d.dishes_image?.data?.attributes?.url
-            ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
-            : "/placeholder-dish.jpg",
-        }))
-      : [];
+    return json.data.map((item) => ({
+      id: item.id,
+      name: item.attributes.name,
+      price: item.attributes.price,
+      image: item.attributes.image?.data
+        ? `${STRAPI_URL}${item.attributes.image.data.attributes.url}`
+        : "/placeholder-dish.jpg",
+    }));
+  } catch (e) {
+    console.error("getRestaurantDishes error:", e);
+    return [];
+  }
+}
 
-    const ambience = Array.isArray(page.ambience?.ambience_gallery?.data)
-      ? page.ambience.ambience_gallery.data.map(
+/* =========================
+   GET AMBIENCE
+========================= */
+export async function getRestaurantAmbience() {
+  try {
+    const res = await fetch(
+      `${STRAPI_URL}/api/restaurant-ambiences?populate=gallery`,
+      { cache: "no-store" }
+    );
+
+    const json = await res.json();
+    const a = json.data?.[0]?.attributes;
+
+    return Array.isArray(a?.gallery?.data)
+      ? a.gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )
       : [];
-
-    return { dishes, ambience };
   } catch (e) {
-    console.error("getRestaurantContent error:", e);
-    return null;
+    console.error("getRestaurantAmbience error:", e);
+    return [];
   }
 }
