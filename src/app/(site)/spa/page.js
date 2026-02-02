@@ -1,61 +1,56 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Sparkles, Leaf, Droplets, Wind, CheckCircle } from "lucide-react";
-import "./spa.css";
-import useScrollReveal from "../../hooks/useScrollReveal";
 import Link from "next/link";
-import { getSpaServices, getSpaFeature } from "../../lib/spa";
-
-const WHATSAPP_NUMBER = "8129942409";
+import { getSpaServices } from "../../lib/spa";
+import useScrollReveal from "../../hooks/useScrollReveal";
+import "./spa.css";
 
 export default function SpaPage() {
-  const [activeTab, setActiveTab] = useState("Rituals");
   const [services, setServices] = useState([]);
-  const [feature, setFeature] = useState(null);
 
   useEffect(() => {
     async function load() {
       setServices(await getSpaServices());
-      setFeature(await getSpaFeature());
     }
     load();
   }, []);
 
-  useScrollReveal([activeTab, services.length, feature]);
+  useScrollReveal([services.length]);
 
-  if (!feature) return <p style={{ padding: 120 }}>Loading spa…</p>;
+  if (!services.length) {
+    return <p style={{ padding: 120 }}>Loading spa…</p>;
+  }
 
   return (
     <main className="spa-page">
+      {/* HERO */}
       <section className="spa-hero" data-animate>
-        <div className="spa-icon">
-          <Sparkles size={32} />
-        </div>
         <h1>
-          Joy <span>Ayurvedic</span> Spa.
+          Joy <span>Ayurvedic</span> Spa
         </h1>
         <p>
-          Ancient Keralan wisdom meets the modern quest for stillness.
+          Authentic Ayurvedic therapies rooted in Kerala’s ancient healing
+          traditions.
         </p>
       </section>
 
-      {activeTab === "Rituals" && (
-        <div className="ritual-grid">
-          {services.map((service) => (
-            <div key={service.id} className="ritual-card">
-              <h3>{service.name}</h3>
-              <p>{service.description}</p>
-              <Link href={`/spa/${service.slug}`}>View →</Link>
-            </div>
-          ))}
-        </div>
-      )}
+      {/* SERVICES */}
+      <section className="ritual-grid">
+        {services.map((service) => (
+          <div key={service.id} className="ritual-card" data-animate>
+            <span>{service.category}</span>
+            <h3>{service.name}</h3>
+            <p>{service.description}</p>
 
-      <section className="spa-feature">
-        <img src={feature.image} alt={feature.title} />
-        <h2>{feature.title}</h2>
-        <p>{feature.description}</p>
+            <div className="ritual-footer">
+              <strong>₹{service.price}</strong>
+              <Link href={`/spa/${service.slug}`} className="ritual-btn">
+                View Treatment →
+              </Link>
+            </div>
+          </div>
+        ))}
       </section>
     </main>
   );
