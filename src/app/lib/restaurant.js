@@ -1,8 +1,5 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-/* =========================
-   RESTAURANT PAGE CONTENT
-========================= */
 export async function getRestaurantContent() {
   try {
     const res = await fetch(
@@ -18,23 +15,28 @@ export async function getRestaurantContent() {
 
     const a = page.attributes;
 
-    /* ---------- DISHES (REPEATABLE COMPONENT) ---------- */
-    const dishes = Array.isArray(a?.dishes)
+    /* =========================
+       DISHES (REPEATABLE COMPONENT)
+    ========================= */
+    const dishes = Array.isArray(a.dishes)
       ? a.dishes.map((d) => ({
-          name: d.dishes_name ?? "",
-          price: d.dishes_price ?? "",
+          name: d.dishes_name,
+          price: d.dishes_price,
           image: d.dishes_image?.data?.attributes?.url
             ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
             : "/placeholder-dish.jpg",
         }))
       : [];
 
-    /* ---------- AMBIENCE GALLERY ---------- */
-    const ambience = Array.isArray(a?.ambience?.ambience_gallery?.data)
+    /* =========================
+       AMBIENCE GALLERY
+    ========================= */
+    const ambience = Array.isArray(a.ambience?.ambience_gallery?.data)
       ? a.ambience.ambience_gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )
       : [];
+      console.log("DISHES FROM STRAPI 👉", dishes);
 
     return { dishes, ambience };
   } catch (error) {
