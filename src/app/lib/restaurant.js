@@ -18,23 +18,21 @@ export async function getRestaurantContent() {
 
     const a = page.attributes;
 
-    /* ---------- DISHES (component OR relation safe) ---------- */
-    const dishesRaw = Array.isArray(a?.dishes)
-      ? a.dishes
-      : Array.isArray(a?.dishes?.data)
-      ? a.dishes.data.map((d) => d.attributes)
+    /* ---------- SINGLE DISH (YOUR CURRENT STRUCTURE) ---------- */
+    const dishes = a.dishes_name
+      ? [
+          {
+            name: a.dishes_name,
+            price: a.dishes_price,
+            image: a.dishes_image?.data?.attributes?.url
+              ? `${STRAPI_URL}${a.dishes_image.data.attributes.url}`
+              : "/placeholder-dish.jpg",
+          },
+        ]
       : [];
 
-    const dishes = dishesRaw.map((d) => ({
-      name: d.name ?? "",
-      price: d.price ?? "",
-      image: d.image?.data?.attributes?.url
-        ? `${STRAPI_URL}${d.image.data.attributes.url}`
-        : "/placeholder-dish.jpg",
-    }));
-
     /* ---------- AMBIENCE GALLERY ---------- */
-    const ambience = Array.isArray(a?.ambience_gallery?.data)
+    const ambience = Array.isArray(a.ambience_gallery?.data)
       ? a.ambience_gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )
