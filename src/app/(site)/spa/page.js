@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { Sparkles, Leaf, Droplets, Wind, CheckCircle } from "lucide-react";
 import "./spa.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
@@ -12,38 +12,44 @@ const WHATSAPP_NUMBER = "8129942409";
 export default function SpaPage() {
   const [activeTab, setActiveTab] = useState("Rituals");
   const [services, setServices] = useState([]);
-  const [feature, setFeature] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  const feature = getSpaFeature(); // 🔥 instant, no CMS dependency
 
   useEffect(() => {
     async function load() {
-      const [s, f] = await Promise.all([getSpaServices(), getSpaFeature()]);
-      setServices(s);
-      setFeature(f);
+      const data = await getSpaServices();
+      setServices(data);
+      setLoaded(true); // 🔑 always end loading
     }
     load();
   }, []);
 
-  useScrollReveal([activeTab, services.length, feature]);
+  useScrollReveal([activeTab, services.length]);
 
-  if (!feature) return <p style={{ padding: 120 }}>Loading spa…</p>;
+  if (!loaded) {
+    return <p style={{ padding: 120 }}>Loading spa…</p>;
+  }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello, I would like to book an Ayurvedic consultation.",
+    `Hello,\n\nI would like to book an Ayurvedic doctor consultation.`
   )}`;
 
   return (
     <main className="spa-page">
       {/* HERO */}
       <section className="spa-hero" data-animate>
-        <Sparkles size={32} />
+        <div className="spa-icon">
+          <Sparkles size={32} />
+        </div>
         <h1>
-          Joy <span>Ayurvedic</span> Spa
+          Joy <span>Ayurvedic</span> Spa.
         </h1>
-        <p>Ancient Keralan wisdom for modern wellness.</p>
+        <p>Ancient Keralan wisdom meets modern stillness.</p>
       </section>
 
       {/* TABS */}
-      <section className="spa-tabs">
+      <section className="spa-tabs" data-animate>
         <div className="tab-header">
           {["Rituals", "Consult"].map((tab) => (
             <button
@@ -51,7 +57,7 @@ export default function SpaPage() {
               onClick={() => setActiveTab(tab)}
               className={activeTab === tab ? "active" : ""}
             >
-              {tab === "Rituals" ? "Healing Rituals" : "Doctor Consultation"}
+              {tab === "Rituals" ? "Healing Rituals" : "Dr. Consultation"}
             </button>
           ))}
         </div>
@@ -59,23 +65,31 @@ export default function SpaPage() {
         {/* RITUALS */}
         {activeTab === "Rituals" && (
           <div className="ritual-grid">
-            {services.map((s) => (
-              <div key={s.id} className="ritual-card" data-animate>
+            {services.length === 0 && (
+              <p style={{ opacity: 0.7 }}>No treatments available</p>
+            )}
+
+            {services.map((service) => (
+              <div key={service.id} className="ritual-card" data-animate>
                 <div className="ritual-head">
                   <div>
-                    <span>{s.category}</span>
-                    <h3>{s.name}</h3>
+                    <span>{service.category}</span>
+                    <h3>{service.name}</h3>
                   </div>
-                  <strong>₹{s.price}</strong>
+                  <strong>₹{service.price}</strong>
                 </div>
 
-                <p>{s.description}</p>
+                <p>{service.description}</p>
 
                 <div className="ritual-footer">
-                  <Leaf size={16} />
-                  <Droplets size={16} />
-                  <Wind size={16} />
-                  <Link href={`/spa/${s.slug}`}>View →</Link>
+                  <div className="ritual-icons">
+                    <Leaf size={16} />
+                    <Droplets size={16} />
+                    <Wind size={16} />
+                  </div>
+                  <Link href={`/spa/${service.slug}`} className="ritual-btn">
+                    View Treatment →
+                  </Link>
                 </div>
               </div>
             ))}
@@ -84,21 +98,51 @@ export default function SpaPage() {
 
         {/* CONSULT */}
         {activeTab === "Consult" && (
-          <div className="consult-box" data-animate>
-            <h4>Personalized Healing</h4>
-            <p>Dosha assessment by certified Ayurvedic doctor.</p>
-            <a href={consultWhatsapp} target="_blank">
-              <button>Book Consultation</button>
-            </a>
+          <div className="consult-grid" data-animate>
+            <div className="consult-info">
+              <h4>Personalized Healing</h4>
+              <p>
+                Each journey begins with a Dosha assessment by our resident
+                Ayurvedic doctor.
+              </p>
+
+              <ul>
+                {[
+                  "Dosha Analysis",
+                  "Diet Guidance",
+                  "Yoga Recommendations",
+                  "Herbal Prescription",
+                ].map((item) => (
+                  <li key={item}>
+                    <CheckCircle size={18} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="consult-box">
+              <h5>Book Consultation</h5>
+              <a href={consultWhatsapp} target="_blank">
+                <button>Schedule Doctor Call</button>
+              </a>
+              <p>Consultation fee: ₹1,500</p>
+            </div>
           </div>
         )}
       </section>
 
       {/* FEATURE */}
       <section className="spa-feature" data-animate>
-        <img src={feature.image} alt={feature.title} />
-        <h2>{feature.title}</h2>
-        <p>{feature.description}</p>
+        <div className="feature-image">
+          <img src={feature.image} alt={feature.title} />
+        </div>
+
+        <div className="feature-text">
+          <span>Signature Therapy</span>
+          <h2>{feature.title}</h2>
+          <p>{feature.description}</p>
+        </div>
       </section>
     </main>
   );

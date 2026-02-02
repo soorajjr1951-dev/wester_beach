@@ -1,22 +1,21 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
-   NORMALIZE SPA SERVICE
+   NORMALIZE SPA (LIKE ROOMS)
 ========================= */
 function normalizeSpa(item) {
-  const s = item?.attributes;
-  if (!s) return null; // 🔒 SAFETY
+  const s = item?.attributes ?? item;
 
   return {
     id: item.id,
-    name: s.name ?? "",
-    slug: s.slug ?? "",
-    category: s.category ?? "",
-    price: s.price ?? 0,
-    description: s.description ?? "",
-    long_description: s.long_description ?? "",
+    name: s?.name ?? "",
+    slug: s?.slug ?? "",
+    price: s?.price ?? 0,
+    category: s?.category ?? "",
+    description: s?.description ?? "",
+    long_description: s?.long_description ?? "",
 
-    gallery: Array.isArray(s.gallery?.data)
+    gallery: Array.isArray(s?.gallery?.data)
       ? s.gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )
@@ -25,54 +24,29 @@ function normalizeSpa(item) {
 }
 
 /* =========================
-   GET ALL SPA SERVICES
+   GET SPA SERVICES
 ========================= */
 export async function getSpaServices() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/spa-services?populate=gallery&sort=price:asc`,
+      `${STRAPI_URL}/api/spa-services?populate=gallery`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) throw new Error("Failed to fetch spa services");
+    if (!res.ok) return [];
 
     const json = await res.json();
-
     return Array.isArray(json.data)
-      ? json.data
-          .map(normalizeSpa)
-          .filter(Boolean) // 🔥 REMOVE BROKEN ENTRIES
+      ? json.data.map(normalizeSpa)
       : [];
-  } catch (error) {
-    console.error("getSpaServices error:", error);
+  } catch (e) {
+    console.error("getSpaServices error:", e);
     return [];
   }
 }
 
 /* =========================
-   GET SPA BY SLUG
-========================= */
-export async function getSpaBySlug(slug) {
-  try {
-    const res = await fetch(
-      `${STRAPI_URL}/api/spa-services?filters[slug][$eq]=${slug}&populate=gallery`,
-      { cache: "no-store" }
-    );
-
-    if (!res.ok) throw new Error("Spa not found");
-
-    const json = await res.json();
-    if (!json.data?.length) return null;
-
-    return normalizeSpa(json.data[0]);
-  } catch (error) {
-    console.error("getSpaBySlug error:", error);
-    return null;
-  }
-}
-
-/* =========================
-   GET SPA FEATURE (CMS)
+   GET SPA FEATURE
 ========================= */
 export async function getSpaFeature() {
   try {
@@ -81,7 +55,7 @@ export async function getSpaFeature() {
       { cache: "no-store" }
     );
 
-    if (!res.ok) throw new Error("Failed to fetch spa feature");
+    if (!res.ok) return null;
 
     const json = await res.json();
     const f = json.data?.[0]?.attributes;
@@ -94,8 +68,8 @@ export async function getSpaFeature() {
         ? `${STRAPI_URL}${f.feature_image.data.attributes.url}`
         : "/spa/spa-feature.jpg",
     };
-  } catch (error) {
-    console.error("getSpaFeature error:", error);
+  } catch (e) {
+    console.error("getSpaFeature error:", e);
     return null;
   }
 }

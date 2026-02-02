@@ -1,8 +1,5 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-/* =========================
-   GET RESTAURANT PAGE
-========================= */
 export async function getRestaurantContent() {
   try {
     const res = await fetch(
@@ -10,39 +7,31 @@ export async function getRestaurantContent() {
       { cache: "no-store" }
     );
 
-    if (!res.ok) throw new Error("Failed to fetch restaurant");
+    if (!res.ok) return null;
 
     const json = await res.json();
-    const page = json.data?.[0];
-    if (!page?.attributes) return null;
+    const page = json.data?.[0]?.attributes;
+    if (!page) return null;
 
-    const a = page.attributes;
-
-    /* =========================
-       DISHES (REPEATABLE COMPONENT)
-    ========================= */
-    const dishes = Array.isArray(a.dishes)
-      ? a.dishes.map((d) => ({
-          name: d?.dishes_name ?? "",
-          price: d?.dishes_price ?? "",
-          image: d?.dishes_image?.data?.attributes?.url
+    const dishes = Array.isArray(page.dishes)
+      ? page.dishes.map((d) => ({
+          name: d.dishes_name ?? "",
+          price: d.dishes_price ?? "",
+          image: d.dishes_image?.data?.attributes?.url
             ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
             : "/placeholder-dish.jpg",
         }))
       : [];
 
-    /* =========================
-       AMBIENCE (SINGLE COMPONENT)
-    ========================= */
-    const ambience = Array.isArray(a.ambience?.ambience_gallery?.data)
-      ? a.ambience.ambience_gallery.data.map(
+    const ambience = Array.isArray(page.ambience?.ambience_gallery?.data)
+      ? page.ambience.ambience_gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )
       : [];
 
     return { dishes, ambience };
-  } catch (error) {
-    console.error("getRestaurantContent error:", error);
+  } catch (e) {
+    console.error("getRestaurantContent error:", e);
     return null;
   }
 }
