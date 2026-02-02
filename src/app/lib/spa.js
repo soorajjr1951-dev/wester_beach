@@ -31,7 +31,7 @@ function normalizeSpa(item) {
 export async function getSpaServices() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/spa-services?populate=gallery&sort=price:asc`,
+      `${STRAPI_URL}/api/spa-service?populate=gallery&sort=price:asc`,
       { cache: "no-store" }
     );
 
@@ -54,7 +54,7 @@ export async function getSpaServices() {
 export async function getSpaBySlug(slug) {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/spa-services?filters[slug][$eq]=${slug}&populate=gallery`,
+      `${STRAPI_URL}/api/spa-service?filters[slug][$eq]=${slug}&populate=gallery`,
       { cache: "no-store" }
     );
 
