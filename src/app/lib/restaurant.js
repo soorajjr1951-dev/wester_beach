@@ -14,27 +14,23 @@ export async function getRestaurantContent() {
 
     const json = await res.json();
     const page = json.data?.[0];
-
     if (!page) return null;
 
-    const r = page.attributes;
+    const a = page.attributes;
 
     return {
-      dishes: Array.isArray(r?.dishes?.data)
-        ? r.dishes.data.map((d) => {
-            const dish = d.attributes;
-            return {
-              name: dish.name,
-              price: dish.price,
-              image: dish.image?.data?.attributes?.url
-                ? `${STRAPI_URL}${dish.image.data.attributes.url}`
-                : "/placeholder-dish.jpg",
-            };
-          })
+      dishes: Array.isArray(a?.dishes)
+        ? a.dishes.map((d) => ({
+            name: d.name ?? "",
+            price: d.price ?? "",
+            image: d.image?.data?.attributes?.url
+              ? `${STRAPI_URL}${d.image.data.attributes.url}`
+              : "/placeholder-dish.jpg",
+          }))
         : [],
 
-      ambience: Array.isArray(r?.ambience_gallery?.data)
-        ? r.ambience_gallery.data.map(
+      ambience: Array.isArray(a?.ambience_gallery?.data)
+        ? a.ambience_gallery.data.map(
             (img) => `${STRAPI_URL}${img.attributes.url}`
           )
         : [],

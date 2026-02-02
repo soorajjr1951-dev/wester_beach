@@ -29,7 +29,7 @@ export default function RestaurantPage() {
       <section className="restaurant-hero">
         <div className="restaurant-hero-media">
           <img
-            src="https://images.unsplash.com/photo-1559339352-11d035aa65de"
+            src="/restaurant/hero.JPG"
             alt="Beachside Restaurant"
           />
         </div>
