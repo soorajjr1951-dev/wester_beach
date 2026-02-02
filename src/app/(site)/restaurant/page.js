@@ -3,30 +3,26 @@
 import { useEffect, useState } from "react";
 import "./restaurant.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
-import {
-  getRestaurantDishes,
-  getRestaurantAmbience,
-} from "../../lib/restaurant";
+import { getRestaurantContent } from "../../lib/restaurant";
 
 export default function RestaurantPage() {
   useScrollReveal();
 
-  const [dishes, setDishes] = useState([]);
-  const [ambience, setAmbience] = useState([]);
-  const [loaded, setLoaded] = useState(false);
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function load() {
-      setDishes(await getRestaurantDishes());
-      setAmbience(await getRestaurantAmbience());
-      setLoaded(true);
+      const content = await getRestaurantContent();
+      setData(content);
     }
     load();
   }, []);
 
-  if (!loaded) {
+  if (!data) {
     return <p style={{ padding: 120 }}>Loading…</p>;
   }
+
+  const { dishes, ambience } = data;
 
   return (
     <main className="restaurant-page">
@@ -59,8 +55,8 @@ export default function RestaurantPage() {
           </header>
 
           <div className="dish-grid">
-            {dishes.map((dish) => (
-              <div key={dish.id} className="dish-card" data-animate>
+            {dishes.map((dish, i) => (
+              <div key={i} className="dish-card" data-animate>
                 <img src={dish.image} alt={dish.name} />
                 <div className="dish-info">
                   <h4>{dish.name}</h4>
@@ -87,7 +83,7 @@ export default function RestaurantPage() {
 
             <div className="ambience-images" data-animate="right">
               {ambience.map((img, i) => (
-                <img key={i} src={img} alt={`Dining ${i + 1}`} />
+                <img key={i} src={img} alt={`Dining view ${i + 1}`} />
               ))}
             </div>
           </div>

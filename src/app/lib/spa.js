@@ -42,35 +42,16 @@ export async function getSpaServices() {
 }
 
 /* =========================
-   GET SPA FEATURE
+   SPA FEATURE (LOCAL ONLY)
 ========================= */
-export async function getSpaFeature() {
-  try {
-    const res = await fetch(
-      `${STRAPI_URL}/api/spa-features?populate=feature_image`,
-      { cache: "no-store" }
-    );
 
-    if (!res.ok) throw new Error("Failed to fetch spa feature");
-
-    const json = await res.json();
-    const f = json.data?.[0]?.attributes;
-
-    return {
-      title: f?.title ?? "Ayurvedic Rejuvenation",
-      description: f?.description ?? "",
-      image: f?.feature_image?.data?.attributes?.url
-        ? `${STRAPI_URL}${f.feature_image.data.attributes.url}`
-        : "/spa/spa-feature.jpg",
-    };
-  } catch (e) {
-    console.error("getSpaFeature error:", e);
-    return {
-      title: "Ayurvedic Rejuvenation",
-      description: "A deeply restorative therapy combining Abhyanga, Shirodhara and herbal steam to realign body and mind.",
-      image: "/spa/spa-feature.jpg",
-    };
-  }
+export function getSpaFeature() {
+  return {
+    title: "Signature Ayurvedic Rejuvenation",
+    description:
+      "A deeply restorative therapy combining Abhyanga, Shirodhara, and herbal steam to realign the body, calm the nervous system, and restore inner balance.",
+    image: "https://cms.westernbeachventures.com/uploads/DSC_03813a_798670ed24.jpg", // MUST exist in /public/spa/
+  };
 }
 
 /* =========================
