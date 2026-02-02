@@ -26,10 +26,9 @@ export default function RoomsPage() {
     if (filterType !== "ALL") {
       list = list.filter((r) => r.category === filterType);
     }
-    list.sort((a, b) =>
-      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price,
+    return list.sort((a, b) =>
+      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price
     );
-    return list;
   }, [rooms, filterType, sortOrder]);
 
   useScrollReveal([visibleRooms.length]);
@@ -48,30 +47,6 @@ export default function RoomsPage() {
           <p>Eight uniquely commissioned chambers by the sea.</p>
         </header>
 
-        <div className="rooms-controls" data-animate>
-          <div className="filter-group">
-            {["ALL", "AC", "NON-AC"].map((type) => (
-              <button
-                key={type}
-                className={filterType === type ? "active" : ""}
-                onClick={() => setFilterType(type)}
-              >
-                {type.replace("_", " ")}
-              </button>
-            ))}
-          </div>
-
-          <div className="sort-group">
-            <select
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-            >
-              <option value="LOW_HIGH">Price: Low → High</option>
-              <option value="HIGH_LOW">Price: High → Low</option>
-            </select>
-          </div>
-        </div>
-
         <div className="rooms-grid">
           {visibleRooms.map((room) => (
             <Link
@@ -82,9 +57,7 @@ export default function RoomsPage() {
             >
               <div className="room-card-image">
                 <img src={room.preview_image} alt={room.name} />
-                <span
-                  className={`badge ${room.category === "AC" ? "ac" : "non-ac"}`}
-                >
+                <span className={`badge ${room.category === "AC" ? "ac" : "non-ac"}`}>
                   {room.category}
                 </span>
               </div>

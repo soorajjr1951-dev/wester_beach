@@ -14,26 +14,28 @@ export default function RoomDetailPage() {
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
+    if (!slug) return;
+
     async function fetchRoom() {
       const data = await getRoomBySlug(slug);
       setRoom(data);
-      setActiveImage(data?.gallery?.[0]);
+      setActiveImage(data?.gallery?.[0] || null);
     }
-    if (slug) fetchRoom();
+
+    fetchRoom();
   }, [slug]);
 
   useScrollReveal([room, activeImage]);
 
-  if (!room) return <p style={{ padding: 120 }}>Room not found.</p>;
+  if (!room) return <p style={{ padding: 120 }}>Loading room…</p>;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello, \n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`,
+    `Hello,\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
   )}`;
 
   return (
     <main className="room-detail-page">
       <section className="room-detail-grid" data-animate>
-        {/* CONTENT */}
         <div className="room-detail-content">
           <span className="room-category">{room.category}</span>
 
@@ -56,14 +58,13 @@ export default function RoomDetailPage() {
           </a>
         </div>
 
-        {/* GALLERY */}
         <div className="room-gallery">
           <div className="room-gallery-main">
-            <img src={activeImage} alt={room.name} />
+            {activeImage && <img src={activeImage} alt={room.name} />}
           </div>
 
           <div className="room-gallery-thumbs">
-            {room.gallery.map((img, i) => (
+            {room.gallery?.map((img, i) => (
               <button
                 key={i}
                 className={`thumb ${activeImage === img ? "active" : ""}`}
