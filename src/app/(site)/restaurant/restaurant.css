@@ -1,3 +1,10 @@
+/* 🔴 FORCE VISIBILITY — DEBUG MODE */
+[data-animate] {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+
 .restaurant-page {
   background: #f6efe4;
   color: #0b1b12;
