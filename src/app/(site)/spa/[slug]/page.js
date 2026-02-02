@@ -32,7 +32,7 @@ export default function SpaDetailPage() {
   }
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book the *${spa.name}* treatment.\nPrice: ₹${spa.price}`
+    `Hello,\n\nI would like to book the *${spa.name}* treatment.`
   )}`;
 
   return (
