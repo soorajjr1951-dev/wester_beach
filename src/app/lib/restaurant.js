@@ -1,27 +1,27 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
-   GET RESTAURANT PAGE
+   RESTAURANT PAGE CONTENT
 ========================= */
 export async function getRestaurantContent() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-pages?populate[dishes][populate]=image&populate=ambience_gallery`,
+      `${STRAPI_URL}/api/restaurant-pages?populate=*`,
       { cache: "no-store" }
     );
 
     if (!res.ok) throw new Error("Failed to fetch restaurant");
 
     const json = await res.json();
-    const r = json.data?.[0]; // 👈 collection → first item
+    const page = json.data?.[0];
 
-    if (!r) return null;
+    if (!page) return null;
 
-    const a = r.attributes ?? r;
+    const r = page.attributes ?? page;
 
     return {
-      dishes: Array.isArray(a.dishes)
-        ? a.dishes.map((d) => ({
+      dishes: Array.isArray(r.dishes)
+        ? r.dishes.map((d) => ({
             name: d.name,
             price: d.price,
             image: d.image?.url
@@ -30,8 +30,8 @@ export async function getRestaurantContent() {
           }))
         : [],
 
-      ambience: Array.isArray(a.ambience_gallery?.data)
-        ? a.ambience_gallery.data.map(
+      ambience: Array.isArray(r.ambience_gallery?.data)
+        ? r.ambience_gallery.data.map(
             (img) => `${STRAPI_URL}${img.attributes.url}`
           )
         : [],
