@@ -1,43 +1,102 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-export async function getSpaServices() {
-  const res = await fetch(
-    `${STRAPI_URL}/api/spa-services?sort=price:asc`,
-    { cache: "no-store" }
-  );
-
-  const json = await res.json();
-
-  return json.data.map((s) => ({
-    id: s.id,
-    ...s.attributes,
-  }));
-}
-
-export async function getSpaBySlug(slug) {
-  const res = await fetch(
-    `${STRAPI_URL}/api/spa-services?filters[slug][$eq]=${slug}&populate=gallery`,
-    { cache: "no-store" }
-  );
-
-  const json = await res.json();
-  const s = json.data[0];
-
-  if (!s) return null;
+/* =========================
+   NORMALIZE SPA SERVICE
+========================= */
+function normalizeSpa(item) {
+  const s = item?.attributes ?? item;
 
   return {
-    id: s.id,
-    ...s.attributes,
-    gallery: s.attributes.gallery.data.map((g) => g.attributes.url),
+    id: item.id,
+    name: s?.name ?? "",
+    slug: s?.slug ?? "",
+    category: s?.category ?? "",
+    price: s?.price ?? 0,
+    description: s?.description ?? "",
+    long_description: s?.long_description ?? "",
+
+    gallery: Array.isArray(s?.gallery?.data)
+      ? s.gallery.data.map(
+          (img) => `${STRAPI_URL}${img.attributes.url}`
+        )
+      : Array.isArray(s?.gallery)
+      ? s.gallery.map((img) => `${STRAPI_URL}${img.url}`)
+      : [],
   };
 }
 
-export async function getSpaFeature() {
-  const res = await fetch(
-    `${STRAPI_URL}/api/spa-feature?populate=image`,
-    { cache: "no-store" }
-  );
+/* =========================
+   GET ALL SPA SERVICES
+========================= */
+export async function getSpaServices() {
+  try {
+    const res = await fetch(
+      `${STRAPI_URL}/api/spa-services?populate=gallery&sort=price:asc`,
+      { cache: "no-store" }
+    );
 
-  const json = await res.json();
-  return json.data.attributes;
+    if (!res.ok) throw new Error("Failed to fetch spa services");
+
+    const json = await res.json();
+
+    return Array.isArray(json.data)
+      ? json.data.map(normalizeSpa)
+      : [];
+  } catch (error) {
+    console.error("getSpaServices error:", error);
+    return [];
+  }
+}
+
+/* =========================
+   GET SPA SERVICE BY SLUG
+========================= */
+export async function getSpaBySlug(slug) {
+  try {
+    const res = await fetch(
+      `${STRAPI_URL}/api/spa-services?filters[slug][$eq]=${slug}&populate=gallery`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) throw new Error("Spa service not found");
+
+    const json = await res.json();
+    if (!json.data?.length) return null;
+
+    return normalizeSpa(json.data[0]);
+  } catch (error) {
+    console.error("getSpaBySlug error:", error);
+    return null;
+  }
+}
+
+/* =========================
+   SPA FEATURE (SINGLE TYPE)
+========================= */
+export async function getSpaFeature() {
+  try {
+    const res = await fetch(
+      `${STRAPI_URL}/api/spa-feature?populate=image`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) throw new Error("Failed to fetch spa feature");
+
+    const json = await res.json();
+    const f = json.data?.attributes ?? json.data;
+
+    return {
+      title: f?.title ?? "",
+      description: f?.description ?? "",
+      image:
+        f?.image?.data?.attributes?.url
+          ? `${STRAPI_URL}${f.image.data.attributes.url}`
+          : f?.image?.url
+          ? `${STRAPI_URL}${f.image.url}`
+          : "/placeholder-spa.jpg",
+    };
+  } catch (error) {
+    console.error("getSpaFeature error:", error);
+    return null;
+  }
 }
