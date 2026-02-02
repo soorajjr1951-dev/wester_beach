@@ -12,6 +12,9 @@ export default function useScrollReveal(deps = []) {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("animate-in");
+          } else {
+            // 👇 THIS is the key change
+            entry.target.classList.remove("animate-in");
           }
         });
       },
@@ -22,6 +25,7 @@ export default function useScrollReveal(deps = []) {
     );
 
     elements.forEach((el) => observer.observe(el));
+
     return () => observer.disconnect();
   }, deps);
 }
