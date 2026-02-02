@@ -14,24 +14,19 @@ export async function getRooms() {
 
     const json = await res.json();
 
-    return json.data.map((item) => {
-      const attr = item.attributes;
+    return json.data.map((room) => ({
+      id: room.id,
+      name: room.name,
+      slug: room.slug,
+      price: room.price,
+      category: room.category,
+      short_description: room.short_description,
 
-      return {
-        id: item.id,
-        name: attr.name,
-        slug: attr.slug,
-        price: attr.price,
-        category: attr.category,
-        short_description: attr.short_description,
-
-        // ✅ SAFE preview image
-        preview_image:
-          attr.preview_image?.data?.attributes?.url
-            ? `${STRAPI_URL}${attr.preview_image.data.attributes.url}`
-            : "/placeholder-room.jpg",
-      };
-    });
+      // ✅ preview image (optional)
+      preview_image: room.preview_image?.url
+        ? `${STRAPI_URL}${room.preview_image.url}`
+        : "/placeholder-room.jpg",
+    }));
   } catch (error) {
     console.error("getRooms error:", error);
     return [];
@@ -51,24 +46,22 @@ export async function getRoomBySlug(slug) {
     if (!res.ok) throw new Error("Room not found");
 
     const json = await res.json();
-    const item = json.data[0];
+    const room = json.data[0];
 
-    if (!item) return null;
-
-    const attr = item.attributes;
+    if (!room) return null;
 
     return {
-      id: item.id,
-      name: attr.name,
-      slug: attr.slug,
-      price: attr.price,
-      category: attr.category,
-      description: attr.description,
+      id: room.id,
+      name: room.name,
+      slug: room.slug,
+      price: room.price,
+      category: room.category,
+      description: room.description,
 
-      // ✅ SAFE gallery mapping
-      gallery: (attr.gallery?.data || []).map(
-        (img) => `${STRAPI_URL}${img.attributes.url}`
-      ),
+      // ✅ gallery (optional)
+      gallery: Array.isArray(room.gallery)
+        ? room.gallery.map((img) => `${STRAPI_URL}${img.url}`)
+        : [],
     };
   } catch (error) {
     console.error("getRoomBySlug error:", error);
