@@ -16,20 +16,23 @@ export async function getRestaurantContent() {
     const page = json.data?.[0];
     if (!page) return null;
 
-    const a = page.attributes;
+    // 🔑 SUPPORT BOTH STRAPI SHAPES
+    const a = page.attributes ?? page;
 
-    /* ---------- SINGLE DISH (YOUR CURRENT STRUCTURE) ---------- */
-    const dishes = a.dishes_name
-      ? [
-          {
-            name: a.dishes_name,
-            price: a.dishes_price,
-            image: a.dishes_image?.data?.attributes?.url
-              ? `${STRAPI_URL}${a.dishes_image.data.attributes.url}`
-              : "/placeholder-dish.jpg",
-          },
-        ]
-      : [];
+    /* ---------- DISHES (SINGLE ENTRY STRUCTURE) ---------- */
+    const dishes =
+      a.dishes_name || a.dishes_price || a.dishes_image
+        ? [
+            {
+              name: a.dishes_name ?? "",
+              price: a.dishes_price ?? "",
+              image:
+                a.dishes_image?.data?.[0]?.attributes?.url
+                  ? `${STRAPI_URL}${a.dishes_image.data[0].attributes.url}`
+                  : "/placeholder-dish.jpg",
+            },
+          ]
+        : [];
 
     /* ---------- AMBIENCE GALLERY ---------- */
     const ambience = Array.isArray(a.ambience_gallery?.data)
