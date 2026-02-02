@@ -10,10 +10,16 @@ export default function RestaurantPage() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    getRestaurantContent().then(setData);
+    async function load() {
+      const res = await getRestaurantContent();
+      setData(res);
+    }
+    load();
   }, []);
 
-  if (!data) return <p style={{ padding: 120 }}>Loading…</p>;
+  if (!data) {
+    return <p style={{ padding: 120 }}>Loading…</p>;
+  }
 
   const { dishes, ambience } = data;
 
@@ -42,7 +48,7 @@ export default function RestaurantPage() {
         </div>
       </section>
 
-      {/* SIGNATURE DISHES */}
+      {/* DISHES */}
       <section className="restaurant-dishes">
         <header data-animate>
           <h3>Signature Dishes</h3>
