@@ -156,3 +156,44 @@
     font-size: 12px;
   }
 }
+
+/* FILTER + SORT BAR */
+.rooms-controls {
+  max-width: 1200px;
+  margin: 60px auto 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: flex;
+  gap: 16px;
+}
+
+.filters button {
+  background: none;
+  border: 2px solid #e0e0e0;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.filters button.active,
+.filters button:hover {
+  background: #004e64;
+  color: white;
+  border-color: #004e64;
+}
+
+.sort select {
+  padding: 12px 18px;
+  border-radius: 999px;
+  border: 2px solid #e0e0e0;
+  font-weight: 600;
+  cursor: pointer;
+}
