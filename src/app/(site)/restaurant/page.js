@@ -29,7 +29,7 @@ export default function RestaurantPage() {
       {/* HERO */}
       <section className="restaurant-hero">
         <div className="restaurant-hero-media">
-          <img src="/restaurant/hero.JPG" alt="Beachside Restaurant" />
+          <img src="https://cms.westernbeachventures.com/uploads/DSC_03927_50c81bff50.JPG" alt="Beachside Restaurant" />
         </div>
         <div className="restaurant-hero-overlay"></div>
 

@@ -18,9 +18,7 @@ export default function Footer() {
               </div>
               <div className="brand-text">
                 <span className="brand-title">WESTERN BEACH VENTURES </span>
-                <span className="brand-sub">
-                    • Kovalam
-                </span>
+                <span className="brand-sub">• Kovalam</span>
               </div>
             </div>
 
@@ -29,9 +27,15 @@ export default function Footer() {
             </h4>
 
             <div className="socials">
-              <a href="#"><Instagram /></a>
-              <a href="#"><Facebook /></a>
-              <a href="#"><Phone /></a>
+              <a href="#">
+                <Instagram />
+              </a>
+              <a href="#">
+                <Facebook />
+              </a>
+              <a href="#">
+                <Phone />
+              </a>
             </div>
           </div>
 
@@ -39,10 +43,18 @@ export default function Footer() {
           <div className="footer-column">
             <h5>Explore</h5>
             <ul>
-              <li><Link href="/rooms">The Stays</Link></li>
-              <li><Link href="/restaurant">The Food</Link></li>
-              <li><Link href="/spa">The Spa</Link></li>
-              <li><Link href="/">Our Philosophy</Link></li>
+              <li>
+                <Link href="/rooms">The Stays</Link>
+              </li>
+              <li>
+                <Link href="/restaurant">The Food</Link>
+              </li>
+              <li>
+                <Link href="/spa">The Spa</Link>
+              </li>
+              <li>
+                <Link href="/">Our Philosophy</Link>
+              </li>
             </ul>
           </div>
 
@@ -50,27 +62,27 @@ export default function Footer() {
           <div className="footer-column">
             <h5>Contact</h5>
             <p>
-              Beach Road, Kovalam<br />
+              Beach Road, Kovalam
+              <br />
               Thiruvananthapuram, Kerala 695527
-              <span className="contact-phone">
-                +91 98765 43210
-              </span>
-              <span className="contact-email">
-                hello@westernbeach.in
-              </span>
+              <span className="contact-phone">+91 98765 43210</span>
+              <span className="contact-email">hello@westernbeach.in</span>
             </p>
           </div>
         </div>
 
         {/* BOTTOM BAR */}
         <div className="footer-bottom">
-          <p>
-            © 2024 Western Beach Ventures. All Rights Reserved.
-          </p>
+          <p>© 2024 Western Beach Ventures. All Rights Reserved.</p>
 
           <div className="footer-links">
             <a href="#">Privacy</a>
             <a href="#">Sustainability</a>
+            <a href="#">Powered by</a>
+            <a href="#">
+              <img 
+            src="https://cms.westernbeachventures.com/uploads/168_media_1_d19a9ebd56.png"
+            /></a>
           </div>
         </div>
       </div>
