@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getSpaBySlug } from "../../lib/spa";
-import useScrollReveal from "../../hooks/useScrollReveal";
+import { getSpaBySlug } from "../../../lib/spa";
+import useScrollReveal from "../../../hooks/useScrollReveal";
 import "./spa-detail.css";
 
 const WHATSAPP_NUMBER = "8129942409";

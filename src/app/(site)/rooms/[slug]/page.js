@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { getRoomBySlug } from "../../lib/rooms";
-import useScrollReveal from "../../hooks/useScrollReveal";
+import { getRoomBySlug } from "../../../lib/rooms";
+import useScrollReveal from "../../../hooks/useScrollReveal";
 import "./room-detail.css";
 
 const WHATSAPP_NUMBER = "8129942409";
