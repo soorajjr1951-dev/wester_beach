@@ -22,7 +22,7 @@ export default function HomePage() {
           <p className="hero-tagline">STAY WITH US FEELS LIKE HOME</p>
           <h1 className="hero-title">
             Experience Unparalleled <br />
-            <span>Comfort.</span>
+            <span>Comfort</span>
           </h1>
         </div>
 
