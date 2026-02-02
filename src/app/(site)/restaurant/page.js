@@ -25,13 +25,10 @@ export default function RestaurantPage() {
 
   return (
     <main className="restaurant-page">
-      {/* HERO – STATIC */}
+      {/* HERO */}
       <section className="restaurant-hero">
         <div className="restaurant-hero-media">
-          <img
-            src="/restaurant/hero.JPG"
-            alt="Beachside Restaurant"
-          />
+          <img src="/restaurant/hero.JPG" alt="Beachside Restaurant" />
         </div>
         <div className="restaurant-hero-overlay"></div>
 

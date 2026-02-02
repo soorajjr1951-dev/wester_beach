@@ -6,7 +6,7 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 export async function getRestaurantContent() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-pages?populate=*`,
+      `${STRAPI_URL}/api/restaurant-pages?populate[dishes][populate]=dishes_image&populate[ambience][populate]=ambience_gallery`,
       { cache: "no-store" }
     );
 
@@ -16,27 +16,22 @@ export async function getRestaurantContent() {
     const page = json.data?.[0];
     if (!page) return null;
 
-    // 🔑 SUPPORT BOTH STRAPI SHAPES
-    const a = page.attributes ?? page;
+    const a = page.attributes;
 
-    /* ---------- DISHES (SINGLE ENTRY STRUCTURE) ---------- */
-    const dishes =
-      a.dishes_name || a.dishes_price || a.dishes_image
-        ? [
-            {
-              name: a.dishes_name ?? "",
-              price: a.dishes_price ?? "",
-              image:
-                a.dishes_image?.data?.[0]?.attributes?.url
-                  ? `${STRAPI_URL}${a.dishes_image.data[0].attributes.url}`
-                  : "/placeholder-dish.jpg",
-            },
-          ]
-        : [];
+    /* ---------- DISHES (REPEATABLE COMPONENT) ---------- */
+    const dishes = Array.isArray(a?.dishes)
+      ? a.dishes.map((d) => ({
+          name: d.dishes_name ?? "",
+          price: d.dishes_price ?? "",
+          image: d.dishes_image?.data?.attributes?.url
+            ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
+            : "/placeholder-dish.jpg",
+        }))
+      : [];
 
     /* ---------- AMBIENCE GALLERY ---------- */
-    const ambience = Array.isArray(a.ambience_gallery?.data)
-      ? a.ambience_gallery.data.map(
+    const ambience = Array.isArray(a?.ambience?.ambience_gallery?.data)
+      ? a.ambience.ambience_gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )
       : [];
