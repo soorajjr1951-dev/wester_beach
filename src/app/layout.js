@@ -10,10 +10,15 @@ const poppins = Poppins({
 
 
 export const metadata = {
-  title: "Western Beach Ventures",
+  metadataBase: new URL("https://www.westernbeachventures.com"),
+  title: {
+    default: "Western Beach Ventures",
+    template: "%s | Western Beach Ventures",
+  },
   description:
-    "Western Beach Restaurant, Rooms and Joy Ayurvedic Wellness Spa at Kovalam Beach",
+    "Luxury beach resort in Kerala offering premium rooms, ayurvedic spa, and coastal dining.",
 };
+
 
 export default function RootLayout({ children }) {
   return (
