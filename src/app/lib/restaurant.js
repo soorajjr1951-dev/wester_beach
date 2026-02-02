@@ -6,28 +6,32 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 export async function getRestaurantDishes() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-dishes?populate=dishes_image`,
+      `${STRAPI_URL}/api/restaurant-dishes?populate[dishes_image]=*`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) throw new Error("Failed to fetch dishes");
+    if (!res.ok) {
+      const t = await res.text();
+      console.error("Dishes API response:", t);
+      throw new Error("Failed to fetch dishes");
+    }
 
     const json = await res.json();
 
     return Array.isArray(json.data)
-      ? json.data.map(item => {
-          const d = item.attributes;
+      ? json.data.map((item) => {
+          const d = item.attributes ?? {};
           return {
-            name: d?.dishes_name ?? "",
-            price: d?.dishes_price ?? "",
-            image: d?.dishes_image?.data?.attributes?.url
+            name: d.dishes_name ?? "",
+            price: d.dishes_price ?? "",
+            image: d.dishes_image?.data?.attributes?.url
               ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
               : "/placeholder-dish.jpg",
           };
         })
       : [];
-  } catch (e) {
-    console.error("getRestaurantDishes error:", e);
+  } catch (err) {
+    console.error("getRestaurantDishes error:", err);
     return [];
   }
 }
@@ -38,23 +42,27 @@ export async function getRestaurantDishes() {
 export async function getRestaurantAmbience() {
   try {
     const res = await fetch(
-      `${STRAPI_URL}/api/restaurant-ambiences?populate=ambience_gallery`,
+      `${STRAPI_URL}/api/restaurant-ambiences?populate[ambience_gallery]=*`,
       { cache: "no-store" }
     );
 
-    if (!res.ok) throw new Error("Failed to fetch ambience");
+    if (!res.ok) {
+      const t = await res.text();
+      console.error("Ambience API response:", t);
+      throw new Error("Failed to fetch ambience");
+    }
 
     const json = await res.json();
 
     return Array.isArray(json.data)
-      ? json.data.flatMap(item =>
+      ? json.data.flatMap((item) =>
           item.attributes?.ambience_gallery?.data?.map(
-            img => `${STRAPI_URL}${img.attributes.url}`
+            (img) => `${STRAPI_URL}${img.attributes.url}`
           ) || []
         )
       : [];
-  } catch (e) {
-    console.error("getRestaurantAmbience error:", e);
+  } catch (err) {
+    console.error("getRestaurantAmbience error:", err);
     return [];
   }
 }
