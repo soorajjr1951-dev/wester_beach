@@ -61,6 +61,7 @@ export default function HomePage() {
             <img
               src="https://images.unsplash.com/photo-1630632496226-6c862fb7ab24?q=80&w=687&auto=format&fit=crop"
               alt="Wellness Retreat"
+              loading="lazy"
             />
           </div>
         </div>
@@ -91,7 +92,8 @@ export default function HomePage() {
             className="chapter-card"
             data-animate="up"
           >
-            <img src={item.img} alt={item.title} />
+            <img src={item.img} alt={item.title}
+            loading="lazy" />
             <div className="chapter-overlay">
               <h3>{item.title}</h3>
             </div>

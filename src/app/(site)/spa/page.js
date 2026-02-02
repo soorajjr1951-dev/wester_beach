@@ -142,7 +142,8 @@ export default function SpaPage() {
       {/* FEATURE */}
       <section className="spa-feature" data-animate>
         <div className="feature-image">
-          <img src={feature.image} alt={feature.title} />
+          <img src={feature.image} alt={feature.title} 
+          loading="lazy"/>
         </div>
 
         <div className="feature-text">

@@ -82,6 +82,7 @@ export default function Footer() {
             <a href="#">
               <img 
             src="https://cms.westernbeachventures.com/uploads/168_media_1_d19a9ebd56.png"
+            loading="lazy"
             /></a>
           </div>
         </div>
