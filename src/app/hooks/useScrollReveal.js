@@ -23,28 +23,15 @@ export default function useScrollReveal(deps = []) {
           const el = entry.target;
 
           if (entry.isIntersecting) {
-            // 🚀 MOBILE: instant reveal (no delay logic)
-            if (isMobile) {
-              el.classList.add("animate-in");
-              return;
-            }
-
-            // 🖥 DESKTOP: keep direction-aware animation
             el.classList.add("animate-in");
             el.dataset.revealed = scrollingDown ? "down" : "up";
-          } else {
-            // allow re-animation when leaving viewport
-            el.classList.remove("animate-in");
           }
         });
       },
       {
-        // ⚡ MOBILE: trigger earlier
-        threshold: isMobile ? 0.05 : 0.18,
-
-        // ⚡ MOBILE: remove bottom offset delay
+        threshold: isMobile ? 0.05 : 0.15,
         rootMargin: isMobile
-          ? "0px 0px 0px 0px"
+          ? "0px"
           : "0px 0px -120px 0px",
       }
     );
