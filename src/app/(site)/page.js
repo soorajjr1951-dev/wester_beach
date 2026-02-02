@@ -12,7 +12,7 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-media">
           <img
-            src="hero-lighthouse_4k_3840x2160.png"
+            src="https://cms.westernbeachventures.com/uploads/hero_lighthouse_4k_3840x2160_d09615a032.png"
             alt="Kovalam Lighthouse"
           />
         </div>
