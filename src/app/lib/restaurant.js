@@ -17,20 +17,23 @@ export async function getRestaurantContent() {
 
     if (!page) return null;
 
-    const r = page.attributes ?? page;
+    const r = page.attributes;
 
     return {
-      dishes: Array.isArray(r.dishes)
-        ? r.dishes.map((d) => ({
-            name: d.name,
-            price: d.price,
-            image: d.image?.url
-              ? `${STRAPI_URL}${d.image.url}`
-              : "/placeholder-dish.jpg",
-          }))
+      dishes: Array.isArray(r?.dishes?.data)
+        ? r.dishes.data.map((d) => {
+            const dish = d.attributes;
+            return {
+              name: dish.name,
+              price: dish.price,
+              image: dish.image?.data?.attributes?.url
+                ? `${STRAPI_URL}${dish.image.data.attributes.url}`
+                : "/placeholder-dish.jpg",
+            };
+          })
         : [],
 
-      ambience: Array.isArray(r.ambience_gallery?.data)
+      ambience: Array.isArray(r?.ambience_gallery?.data)
         ? r.ambience_gallery.data.map(
             (img) => `${STRAPI_URL}${img.attributes.url}`
           )
