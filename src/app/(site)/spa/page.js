@@ -16,8 +16,9 @@ export default function SpaPage() {
 
   useEffect(() => {
     async function load() {
-      setServices(await getSpaServices());
-      setFeature(await getSpaFeature());
+      const [s, f] = await Promise.all([getSpaServices(), getSpaFeature()]);
+      setServices(s);
+      setFeature(f);
     }
     load();
   }, []);
@@ -27,7 +28,7 @@ export default function SpaPage() {
   if (!feature) return <p style={{ padding: 120 }}>Loading spa…</p>;
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello, I would like to book an Ayurvedic consultation."
+    "Hello, I would like to book an Ayurvedic consultation.",
   )}`;
 
   return (

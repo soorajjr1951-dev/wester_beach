@@ -1,7 +1,31 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
-   GET SPA SERVICES
+   NORMALIZE SPA SERVICE
+========================= */
+function normalizeSpa(item) {
+  const s = item?.attributes;
+  if (!s) return null; // 🔒 SAFETY
+
+  return {
+    id: item.id,
+    name: s.name ?? "",
+    slug: s.slug ?? "",
+    category: s.category ?? "",
+    price: s.price ?? 0,
+    description: s.description ?? "",
+    long_description: s.long_description ?? "",
+
+    gallery: Array.isArray(s.gallery?.data)
+      ? s.gallery.data.map(
+          (img) => `${STRAPI_URL}${img.attributes.url}`
+        )
+      : [],
+  };
+}
+
+/* =========================
+   GET ALL SPA SERVICES
 ========================= */
 export async function getSpaServices() {
   try {
@@ -15,28 +39,12 @@ export async function getSpaServices() {
     const json = await res.json();
 
     return Array.isArray(json.data)
-      ? json.data.map((item) => {
-          const a = item.attributes;
-
-          return {
-            id: item.id,
-            name: a.name,
-            slug: a.slug,
-            category: a.category,
-            price: a.price,
-            description: a.description,
-            long_description: a.long_description,
-
-            gallery: Array.isArray(a.gallery?.data)
-              ? a.gallery.data.map(
-                  (img) => `${STRAPI_URL}${img.attributes.url}`
-                )
-              : [],
-          };
-        })
+      ? json.data
+          .map(normalizeSpa)
+          .filter(Boolean) // 🔥 REMOVE BROKEN ENTRIES
       : [];
-  } catch (err) {
-    console.error("getSpaServices error:", err);
+  } catch (error) {
+    console.error("getSpaServices error:", error);
     return [];
   }
 }
@@ -56,26 +64,9 @@ export async function getSpaBySlug(slug) {
     const json = await res.json();
     if (!json.data?.length) return null;
 
-    const item = json.data[0];
-    const a = item.attributes;
-
-    return {
-      id: item.id,
-      name: a.name,
-      slug: a.slug,
-      category: a.category,
-      price: a.price,
-      description: a.description,
-      long_description: a.long_description,
-
-      gallery: Array.isArray(a.gallery?.data)
-        ? a.gallery.data.map(
-            (img) => `${STRAPI_URL}${img.attributes.url}`
-          )
-        : [],
-    };
-  } catch (err) {
-    console.error("getSpaBySlug error:", err);
+    return normalizeSpa(json.data[0]);
+  } catch (error) {
+    console.error("getSpaBySlug error:", error);
     return null;
   }
 }
@@ -97,14 +88,14 @@ export async function getSpaFeature() {
     if (!f) return null;
 
     return {
-      title: f.title,
-      description: f.description,
+      title: f.title ?? "",
+      description: f.description ?? "",
       image: f.feature_image?.data?.attributes?.url
         ? `${STRAPI_URL}${f.feature_image.data.attributes.url}`
         : "/spa/spa-feature.jpg",
     };
-  } catch (err) {
-    console.error("getSpaFeature error:", err);
+  } catch (error) {
+    console.error("getSpaFeature error:", error);
     return null;
   }
 }
