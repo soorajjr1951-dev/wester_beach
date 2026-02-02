@@ -1,3 +1,29 @@
+/* =========================
+   SCROLL REVEAL BASE STYLES
+========================= */
+
+[data-animate] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  will-change: opacity, transform;
+}
+
+[data-animate].animate-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Directional helpers (optional, future-proof) */
+[data-animate][data-revealed="up"] {
+  transform: translateY(-20px);
+}
+
+[data-animate][data-revealed="down"] {
+  transform: translateY(0);
+}
+
+
 *{
   padding: 0;
   margin: 0;
