@@ -27,7 +27,7 @@ export default function RoomDetailPage() {
   if (!room) return <p style={{ padding: 120 }}>Room not found.</p>;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello 👋\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`,
+    `Hello, \n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`,
   )}`;
 
   return (

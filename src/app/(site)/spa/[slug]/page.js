@@ -24,7 +24,7 @@ export default function SpaDetailPage() {
   if (!service) return <p style={{ padding: 120 }}>Treatment not found.</p>;
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello 👋\n\nI would like to book the *${service.name}*.\nPrice: ₹${service.price}.`
+    `Hello, \n\nI would like to book the *${service.name}*.\nPrice: ₹${service.price}.`,
   )}`;
 
   return (

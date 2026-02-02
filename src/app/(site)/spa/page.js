@@ -3,25 +3,29 @@
 import { useState, useEffect } from "react";
 import { Sparkles, Leaf, Droplets, Wind, CheckCircle } from "lucide-react";
 import "./spa.css";
-import useScrollReveal from "../hooks/useScrollReveal";
+import useScrollReveal from "../../hooks/useScrollReveal";
 import Link from "next/link";
-import { getSpaServices, getSpaFeature } from "../lib/spa";
+import { getSpaServices, getSpaFeature } from "../../lib/spa";
 
 const WHATSAPP_NUMBER = "8129942409";
 
 export default function SpaPage() {
   const [activeTab, setActiveTab] = useState("Rituals");
   const [services, setServices] = useState([]);
-  const feature = getSpaFeature();
 
+  
   useEffect(() => {
-    setServices(getSpaServices());
+    async function load() {
+      setServices(await getSpaServices());
+      setFeature(await getSpaFeature());
+    }
+    load();
   }, []);
 
   useScrollReveal([activeTab, services.length]);
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello 👋 I would like to book an Ayurvedic doctor consultation."
+    `Hello,  \n\nI would like to book an Ayurvedic doctor consultation.`,
   )}`;
 
   return (
@@ -35,8 +39,8 @@ export default function SpaPage() {
           Joy <span>Ayurvedic</span> Spa.
         </h1>
         <p>
-          Ancient Keralan wisdom meets the modern quest for stillness.
-          We use only cold-pressed oils and hand-picked herbs.
+          Ancient Keralan wisdom meets the modern quest for stillness. We use
+          only cold-pressed oils and hand-picked herbs.
         </p>
       </section>
 
@@ -75,10 +79,7 @@ export default function SpaPage() {
                     <Droplets size={16} />
                     <Wind size={16} />
                   </div>
-                  <Link
-                    href={`/spa/${service.slug}`}
-                    className="ritual-btn"
-                  >
+                  <Link href={`/spa/${service.slug}`} className="ritual-btn">
                     View Treatment →
                   </Link>
                 </div>

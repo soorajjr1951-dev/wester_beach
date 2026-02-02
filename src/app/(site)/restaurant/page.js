@@ -1,46 +1,44 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import "./restaurant.css";
-import useScrollReveal from "../hooks/useScrollReveal";
-import { RESTAURANT_CONTENT } from "../lib/restaurant";
+import useScrollReveal from "../../hooks/useScrollReveal";
+import { getRestaurantContent } from "../../lib/restaurant";
 
 export default function RestaurantPage() {
   useScrollReveal();
+  const [data, setData] = useState(null);
 
-  const { hero, philosophy, dishes, ambience } = RESTAURANT_CONTENT;
+  useEffect(() => {
+    getRestaurantContent().then(setData);
+  }, []);
+
+  if (!data) return <p style={{ padding: 120 }}>Loading…</p>;
+
+  const { dishes, ambience } = data;
 
   return (
     <main className="restaurant-page">
-      {/* HERO */}
+      {/* HERO – STATIC */}
       <section className="restaurant-hero">
         <div className="restaurant-hero-media">
-          <img src={hero.image} alt="Beachside Restaurant" />
+          <img
+            src="https://images.unsplash.com/photo-1559339352-11d035aa65de"
+            alt="Beachside Restaurant"
+          />
         </div>
         <div className="restaurant-hero-overlay"></div>
 
-        <div className="restaurant-hero-content" data-animate="fade">
-          <span className="restaurant-eyebrow">{hero.eyebrow}</span>
+        <div className="restaurant-hero-content" data-animate>
+          <span className="restaurant-eyebrow">Ocean to Plate</span>
           <h1>
-            {hero.title.split(" ")[0]} <br />
-            <span>{hero.title.split(" ").slice(1).join(" ")}</span>
+            The Best <br />
+            <span>Kitchen.</span>
           </h1>
-          <p>{hero.description}</p>
-        </div>
-      </section>
-
-      {/* ABOUT */}
-      <section className="restaurant-about">
-        <div className="about-grid">
-          <div className="about-text" data-animate="left">
-            <h2>{philosophy.title}</h2>
-            {philosophy.paragraphs.map((text, i) => (
-              <p key={i}>{text}</p>
-            ))}
-          </div>
-
-          <div className="about-image" data-animate="right">
-            <img src={philosophy.image} alt="Fresh coastal cuisine" />
-          </div>
+          <p>
+            A beachside dining experience rooted in Keralan tradition and shaped
+            by the sea.
+          </p>
         </div>
       </section>
 
@@ -68,9 +66,12 @@ export default function RestaurantPage() {
       <section className="restaurant-ambience">
         <div className="ambience-grid">
           <div className="ambience-text" data-animate="left">
-            <span>{ambience.label}</span>
-            <h2>{ambience.title}</h2>
-            <p>{ambience.description}</p>
+            <span>Seating & Ambience</span>
+            <h2>Indoor & Outdoor Dining</h2>
+            <p>
+              Choose between shaded indoor seating or open-air deck tables
+              overlooking the Arabian Sea.
+            </p>
           </div>
 
           <div className="ambience-images" data-animate="right">

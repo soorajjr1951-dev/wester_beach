@@ -3,8 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import "./rooms.css";
-import useScrollReveal from "../hooks/useScrollReveal";
-import { getRooms } from "../lib/rooms";
+import useScrollReveal from "../../hooks/useScrollReveal";
+import { getRooms } from "../../lib/rooms";
 
 export default function RoomsPage() {
   const [rooms, setRooms] = useState([]);
@@ -27,7 +27,7 @@ export default function RoomsPage() {
       list = list.filter((r) => r.category === filterType);
     }
     list.sort((a, b) =>
-      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price
+      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price,
     );
     return list;
   }, [rooms, filterType, sortOrder]);
@@ -82,7 +82,9 @@ export default function RoomsPage() {
             >
               <div className="room-card-image">
                 <img src={room.preview_image} alt={room.name} />
-                <span className={`badge ${room.category === "AC" ? "ac" : "non-ac"}`}>
+                <span
+                  className={`badge ${room.category === "AC" ? "ac" : "non-ac"}`}
+                >
                   {room.category}
                 </span>
               </div>
