@@ -14,23 +14,27 @@ export async function getRestaurantContent() {
 
     const json = await res.json();
     const page = json.data?.[0];
-    if (!page) return null;
+    if (!page?.attributes) return null;
 
     const a = page.attributes;
 
-    /* ---------- DISHES (REPEATABLE COMPONENT) ---------- */
-    const dishes = Array.isArray(a?.dishes)
+    /* =========================
+       DISHES (REPEATABLE COMPONENT)
+    ========================= */
+    const dishes = Array.isArray(a.dishes)
       ? a.dishes.map((d) => ({
-          name: d.dishes_name ?? "",
-          price: d.dishes_price ?? "",
-          image: d.dishes_image?.data?.attributes?.url
+          name: d?.dishes_name ?? "",
+          price: d?.dishes_price ?? "",
+          image: d?.dishes_image?.data?.attributes?.url
             ? `${STRAPI_URL}${d.dishes_image.data.attributes.url}`
             : "/placeholder-dish.jpg",
         }))
       : [];
 
-    /* ---------- AMBIENCE GALLERY ---------- */
-    const ambience = Array.isArray(a?.ambience?.ambience_gallery?.data)
+    /* =========================
+       AMBIENCE (SINGLE COMPONENT)
+    ========================= */
+    const ambience = Array.isArray(a.ambience?.ambience_gallery?.data)
       ? a.ambience.ambience_gallery.data.map(
           (img) => `${STRAPI_URL}${img.attributes.url}`
         )

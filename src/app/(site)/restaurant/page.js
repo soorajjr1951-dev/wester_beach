@@ -46,44 +46,48 @@ export default function RestaurantPage() {
       </section>
 
       {/* DISHES */}
-      <section className="restaurant-dishes">
-        <header data-animate>
-          <h3>Signature Dishes</h3>
-          <p>Selected from the morning catch</p>
-        </header>
+      {dishes.length > 0 && (
+        <section className="restaurant-dishes">
+          <header data-animate>
+            <h3>Signature Dishes</h3>
+            <p>Selected from the morning catch</p>
+          </header>
 
-        <div className="dish-grid">
-          {dishes.map((dish, i) => (
-            <div key={i} className="dish-card" data-animate>
-              <img src={dish.image} alt={dish.name} />
-              <div className="dish-info">
-                <h4>{dish.name}</h4>
-                <span>₹{dish.price}</span>
+          <div className="dish-grid">
+            {dishes.map((dish, i) => (
+              <div key={i} className="dish-card" data-animate>
+                <img src={dish.image} alt={dish.name} />
+                <div className="dish-info">
+                  <h4>{dish.name}</h4>
+                  <span>₹{dish.price}</span>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* AMBIENCE */}
-      <section className="restaurant-ambience">
-        <div className="ambience-grid">
-          <div className="ambience-text" data-animate="left">
-            <span>Seating & Ambience</span>
-            <h2>Indoor & Outdoor Dining</h2>
-            <p>
-              Choose between shaded indoor seating or open-air deck tables
-              overlooking the Arabian Sea.
-            </p>
-          </div>
-
-          <div className="ambience-images" data-animate="right">
-            {ambience.map((img, i) => (
-              <img key={i} src={img} alt={`Dining view ${i + 1}`} />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      )}
+
+      {/* AMBIENCE */}
+      {ambience.length > 0 && (
+        <section className="restaurant-ambience">
+          <div className="ambience-grid">
+            <div className="ambience-text" data-animate="left">
+              <span>Seating & Ambience</span>
+              <h2>Indoor & Outdoor Dining</h2>
+              <p>
+                Choose between shaded indoor seating or open-air deck tables
+                overlooking the Arabian Sea.
+              </p>
+            </div>
+
+            <div className="ambience-images" data-animate="right">
+              {ambience.map((img, i) => (
+                <img key={i} src={img} alt={`Dining view ${i + 1}`} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </main>
   );
 }
