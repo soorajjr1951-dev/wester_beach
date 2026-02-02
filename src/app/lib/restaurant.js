@@ -8,29 +8,18 @@ export async function getRestaurantContent() {
       {
         name: "Grilled Tiger Prawns",
         price: "950",
-        image: "/restaurant/dishes/prawns.jpg",
+        image: "https://cms.westernbeachventures.com/uploads/Grilled_Red_Snapper_0149e892e1.jpg",
       },
       {
         name: "Kerala Fish Curry",
         price: "720",
-        image: "/restaurant/dishes/fish-curry.jpg",
-      },
-      {
-        name: "Malabar Chicken Roast",
-        price: "680",
-        image: "/restaurant/dishes/chicken-roast.jpg",
-      },
-      {
-        name: "Vegetable Stew & Appam",
-        price: "540",
-        image: "/restaurant/dishes/appam.jpg",
+        image: "https://cms.westernbeachventures.com/uploads/Kerala_Prawn_Curry_c908cfccd1.jpg",
       },
     ],
 
     ambience: [
-      "/restaurant/ambience/ambience1.jpg",
-      "/restaurant/ambience/ambience2.jpg",
-      "/restaurant/ambience/ambience3.jpg",
+      "https://cms.westernbeachventures.com/uploads/DSC_03940_df498f47a1.JPG",
+      "https://cms.westernbeachventures.com/uploads/DSC_03945_29ace52ed8.JPG",
     ],
   };
 }
