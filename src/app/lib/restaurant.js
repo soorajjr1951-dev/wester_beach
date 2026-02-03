@@ -20,6 +20,8 @@ export async function getRestaurantContent() {
     ambience: [
       "https://cms.westernbeachventures.com/uploads/DSC_03940_df498f47a1.JPG",
       "https://cms.westernbeachventures.com/uploads/DSC_03945_29ace52ed8.JPG",
+      "https://cms.westernbeachventures.com/uploads/DSC_03939_9ccff8ae47.JPG",
+      "https://cms.westernbeachventures.com/uploads/DSC_03932_1deed8b97d.JPG",
     ],
   };
 }
