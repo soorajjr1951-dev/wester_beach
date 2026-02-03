@@ -1,6 +1,29 @@
 const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL;
 
 /* =========================
+   HELPER: IMAGE URL
+========================= */
+function toImageUrl(img) {
+  if (!img) return null;
+
+  // v5 (gallery[])
+  if (img.url) {
+    return img.url.startsWith("http")
+      ? img.url
+      : `${STRAPI_URL}${img.url}`;
+  }
+
+  // v4 (gallery.data[])
+  if (img.attributes?.url) {
+    return img.attributes.url.startsWith("http")
+      ? img.attributes.url
+      : `${STRAPI_URL}${img.attributes.url}`;
+  }
+
+  return null;
+}
+
+/* =========================
    NORMALIZE SPA SERVICE
 ========================= */
 function normalizeSpa(item) {
@@ -15,14 +38,17 @@ function normalizeSpa(item) {
     description: s?.description ?? "",
     long_description: s?.long_description ?? "",
 
+    // ✅ SUPPORTS BOTH STRAPI v4 + v5
     gallery: Array.isArray(s?.gallery?.data)
-      ? s.gallery.data.map(img => `${STRAPI_URL}${img.attributes.url}`)
+      ? s.gallery.data.map(toImageUrl).filter(Boolean)
+      : Array.isArray(s?.gallery)
+      ? s.gallery.map(toImageUrl).filter(Boolean)
       : [],
   };
 }
 
 /* =========================
-   GET SPA SERVICES
+   GET SPA LIST
 ========================= */
 export async function getSpaServices() {
   try {
@@ -34,24 +60,13 @@ export async function getSpaServices() {
     if (!res.ok) throw new Error("Failed to fetch spa services");
 
     const json = await res.json();
-    return Array.isArray(json.data) ? json.data.map(normalizeSpa) : [];
+    return Array.isArray(json.data)
+      ? json.data.map(normalizeSpa)
+      : [];
   } catch (e) {
     console.error("getSpaServices error:", e);
     return [];
   }
-}
-
-/* =========================
-   SPA FEATURE (LOCAL ONLY)
-========================= */
-
-export function getSpaFeature() {
-  return {
-    title: "Signature Ayurvedic Rejuvenation",
-    description:
-      "A deeply restorative therapy combining Abhyanga, Shirodhara, and herbal steam to realign the body, calm the nervous system, and restore inner balance.",
-    image: "https://cms.westernbeachventures.com/uploads/DSC_03813a_798670ed24.jpg", // MUST exist in /public/spa/
-  };
 }
 
 /* =========================
@@ -67,9 +82,24 @@ export async function getSpaBySlug(slug) {
     if (!res.ok) throw new Error("Spa not found");
 
     const json = await res.json();
-    return json.data?.length ? normalizeSpa(json.data[0]) : null;
+    return json.data?.length
+      ? normalizeSpa(json.data[0])
+      : null;
   } catch (e) {
     console.error("getSpaBySlug error:", e);
     return null;
   }
+}
+
+/* =========================
+   SPA FEATURE (LOCAL)
+========================= */
+export function getSpaFeature() {
+  return {
+    title: "Signature Ayurvedic Rejuvenation",
+    description:
+      "A deeply restorative therapy combining Abhyanga, Shirodhara, and herbal steam to realign the body and mind.",
+    image:
+      "https://cms.westernbeachventures.com/uploads/DSC_03813a_798670ed24.jpg",
+  };
 }
