@@ -20,7 +20,18 @@ export default function RestaurantPage() {
   }, []);
 
   if (!data) {
-    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center" }}>Loading…</p>;
+    return (
+      <p
+        style={{
+          padding: 120,
+          color: "#02833a",
+          fontWeight: "bolder",
+          textAlign: "center",
+        }}
+      >
+        Loading…
+      </p>
+    );
   }
 
   const { dishes, ambience } = data;
@@ -49,8 +60,8 @@ export default function RestaurantPage() {
             <span>Kitchen.</span>
           </h1>
           <p>
-            A beachside dining experience rooted in Keralan tradition and shaped
-            by the sea.
+            An intimate indoor dining experience rooted in Keralan tradition and
+            shaped by the sea.
           </p>
         </div>
       </section>
@@ -90,10 +101,11 @@ export default function RestaurantPage() {
           <div className="ambience-grid">
             <div className="ambience-text" data-animate="left">
               <span>Seating & Ambience</span>
-              <h2>Indoor & Outdoor Dining</h2>
+              <h2>Elegant Indoor Dining</h2>
               <p>
-                Choose between shaded indoor seating or open-air deck tables
-                overlooking the Arabian Sea.
+                Experience coastal comfort in our thoughtfully designed dining
+                space, where warm lighting and ocean-inspired décor create the
+                perfect setting for an unforgettable meal.
               </p>
             </div>
 

@@ -7,7 +7,14 @@ export default function useScrollToTop() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Force scroll to top on route change
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    // 1️⃣ Disable browser scroll restoration
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    // 2️⃣ Force scroll AFTER Next finishes rendering
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
   }, [pathname]);
 }

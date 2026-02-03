@@ -178,10 +178,11 @@
   max-width: 1200px;
   margin: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 100px;
   align-items: center;
 }
+
 
 .ambience-text span {
   font-size: 10px;
@@ -226,5 +227,12 @@
 
   .restaurant-hero-content h1 {
     font-size: 56px;
+  }
+
+  .ambience-images img {
+    width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 32px;
   }
 }
