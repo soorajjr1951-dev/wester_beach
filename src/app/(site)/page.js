@@ -81,17 +81,17 @@ export default function HomePage() {
         {[
           {
             title: "Stay",
-            img: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800",
+            img: "https://cms.westernbeachventures.com/uploads/DSC_03698_6794fb68a0.JPG",
             link: "/rooms",
           },
           {
             title: "Dine",
-            img: "https://images.unsplash.com/photo-1559339352-11d035aa65de?auto=format&fit=crop&q=80&w=800",
+            img: "https://cms.westernbeachventures.com/uploads/DSC_03939_9ccff8ae47.JPG",
             link: "/restaurant",
           },
           {
             title: "Heal",
-            img: "https://plus.unsplash.com/premium_photo-1723773777071-7bbc49e21970?q=80&w=687&auto=format&fit=crop",
+            img: "https://cms.westernbeachventures.com/uploads/Head_Massage_bb7925c3dd.jpg",
             link: "/spa",
           },
         ].map((item, i) => (

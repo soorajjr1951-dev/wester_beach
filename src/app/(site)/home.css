@@ -143,7 +143,6 @@
 
 .intro-text h2 {
   font-size: clamp(36px, 5vw, 64px);
-  font-style: italic;
   margin: 20px 0;
 }
 
@@ -227,7 +226,6 @@
 
 .contact-strip h2 {
   font-size: clamp(40px, 6vw, 72px);
-  font-style: italic;
   margin-bottom: 80px;
 }
 
