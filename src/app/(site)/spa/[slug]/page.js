@@ -2,20 +2,20 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { getSpaBySlug } from "../../../lib/spa";
 import useScrollReveal from "../../../hooks/useScrollReveal";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 import "./spa-detail.css";
 
 const WHATSAPP_NUMBER = "8129942409";
 
 export default function SpaDetailPage() {
+  useScrollToTop();
+
   const { slug } = useParams();
   const [spa, setSpa] = useState(null);
   const [activeImage, setActiveImage] = useState(null);
-
-  useEffect(() => {
-  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-}, []);
 
   useEffect(() => {
     if (!slug) return;
@@ -32,7 +32,7 @@ export default function SpaDetailPage() {
   useScrollReveal([spa, activeImage]);
 
   if (!spa) {
-    return <p style={{ padding: 120 }}>Loading treatment…</p>;
+    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading treatment…</p>;
   }
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
@@ -68,7 +68,16 @@ export default function SpaDetailPage() {
         {/* GALLERY */}
         <div className="spa-gallery" data-animate="right">
           <div className="spa-gallery-main">
-            {activeImage && <img src={activeImage} alt={spa.name} />}
+            {activeImage && (
+              <Image
+                src={activeImage}
+                alt={spa.name}
+                width={900}
+                height={600}
+                quality={75}
+                priority
+              />
+            )}
           </div>
 
           <div className="spa-gallery-thumbs">
@@ -78,7 +87,13 @@ export default function SpaDetailPage() {
                 className={`thumb ${activeImage === img ? "active" : ""}`}
                 onClick={() => setActiveImage(img)}
               >
-                <img src={img} alt={`${spa.name} ${i}`} />
+                <Image
+                  src={img}
+                  alt={`${spa.name} ${i + 1}`}
+                  width={120}
+                  height={90}
+                  quality={70}
+                />
               </button>
             ))}
           </div>

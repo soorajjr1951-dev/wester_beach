@@ -2,33 +2,24 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import "./rooms.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import { getRooms } from "../../lib/rooms";
 import useScrollToTop from "@/app/hooks/useScrollToTop";
 
 export default function RoomsPage() {
-  useScrollToTop();
+  useScrollToTop(); // ✅ ONLY THIS (no duplicates)
+
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filterType, setFilterType] = useState("ALL");
   const [sortOrder, setSortOrder] = useState("LOW_HIGH");
 
   useEffect(() => {
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, []);
-
-  useEffect(() => {
     async function fetchRooms() {
       const data = await getRooms();
-      setRooms(data);
+      setRooms(Array.isArray(data) ? data : []);
       setLoading(false);
     }
     fetchRooms();
@@ -42,13 +33,15 @@ export default function RoomsPage() {
     }
 
     return list.sort((a, b) =>
-      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price,
+      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price
     );
   }, [rooms, filterType, sortOrder]);
 
   useScrollReveal([visibleRooms.length, filterType, sortOrder]);
 
-  if (loading) return <p style={{ padding: 120 }}>Loading rooms…</p>;
+  if (loading) {
+    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading rooms…</p>;
+  }
 
   return (
     <main className="rooms-page">
@@ -63,7 +56,7 @@ export default function RoomsPage() {
           <p>Eight uniquely commissioned chambers by the sea.</p>
         </header>
 
-        {/* 🔥 FILTER + SORT */}
+        {/* FILTER + SORT */}
         <div className="rooms-controls" data-animate>
           <div className="filters">
             {["ALL", "AC", "NON-AC"].map((type) => (
@@ -98,7 +91,15 @@ export default function RoomsPage() {
               data-animate
             >
               <div className="room-card-image">
-                <img src={room.preview_image} alt={room.name} />
+                <Image
+                  src={room.preview_image}
+                  alt={room.name}
+                  width={600}
+                  height={420}
+                  quality={75}
+                  className="room-img"
+                />
+
                 <span
                   className={`badge ${
                     room.category === "AC" ? "ac" : "non-ac"

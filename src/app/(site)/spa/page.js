@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Sparkles, Leaf, Droplets, Wind, CheckCircle } from "lucide-react";
+import Image from "next/image";
 import "./spa.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import Link from "next/link";
@@ -12,18 +13,12 @@ const WHATSAPP_NUMBER = "8129942409";
 
 export default function SpaPage() {
   useScrollToTop();
+
   const [activeTab, setActiveTab] = useState("Rituals");
   const [services, setServices] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  useEffect(() => {
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
-  }, []);
-
-  // 🔥 STATIC FEATURE (NO STRAPI DEPENDENCY)
+  // 🔥 STATIC FEATURE (LOCAL / LIB)
   const feature = getSpaFeature();
 
   useEffect(() => {
@@ -35,7 +30,7 @@ export default function SpaPage() {
         console.error("SpaPage load error:", e);
         setServices([]);
       } finally {
-        setLoaded(true); // 🔑 ALWAYS END LOADING
+        setLoaded(true);
       }
     }
     load();
@@ -44,11 +39,11 @@ export default function SpaPage() {
   useScrollReveal([activeTab, services.length]);
 
   if (!loaded) {
-    return <p style={{ padding: 120 }}>Loading spa…</p>;
+    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading spa…</p>;
   }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello,\n\nI would like to book an Ayurvedic doctor consultation.",
+    "Hello,\n\nI would like to book an Ayurvedic doctor consultation."
   )}`;
 
   return (
@@ -151,7 +146,14 @@ export default function SpaPage() {
       {/* FEATURE */}
       <section className="spa-feature" data-animate>
         <div className="feature-image">
-          <img src={feature.image} alt={feature.title} />
+          <Image
+            src={feature.image}
+            alt={feature.title}
+            width={900}
+            height={560}
+            quality={75}
+            priority
+          />
         </div>
 
         <div className="feature-text">

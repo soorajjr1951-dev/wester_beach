@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
+import Image from "next/image";
 import { getRoomBySlug } from "../../../lib/rooms";
 import useScrollReveal from "../../../hooks/useScrollReveal";
+import useScrollToTop from "../../../hooks/useScrollToTop";
 import "./room-detail.css";
 
 const WHATSAPP_NUMBER = "8129942409";
 
 export default function RoomDetailPage() {
+  useScrollToTop(); // ✅ ensures page opens at top
+
   const { slug } = useParams();
   const [room, setRoom] = useState(null);
   const [activeImage, setActiveImage] = useState(null);
@@ -27,7 +31,9 @@ export default function RoomDetailPage() {
 
   useScrollReveal([room, activeImage]);
 
-  if (!room) return <p style={{ padding: 120 }}>Loading room…</p>;
+  if (!room) {
+    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading room…</p>;
+  }
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Hello,\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
@@ -36,6 +42,7 @@ export default function RoomDetailPage() {
   return (
     <main className="room-detail-page">
       <section className="room-detail-grid" data-animate>
+        {/* LEFT CONTENT */}
         <div className="room-detail-content">
           <span className="room-category">{room.category}</span>
 
@@ -58,9 +65,20 @@ export default function RoomDetailPage() {
           </a>
         </div>
 
+        {/* RIGHT GALLERY */}
         <div className="room-gallery">
           <div className="room-gallery-main">
-            {activeImage && <img src={activeImage} alt={room.name} />}
+            {activeImage && (
+              <Image
+                src={activeImage}
+                alt={room.name}
+                width={900}
+                height={600}
+                quality={75}
+                priority
+                className="room-main-img"
+              />
+            )}
           </div>
 
           <div className="room-gallery-thumbs">
@@ -70,7 +88,14 @@ export default function RoomDetailPage() {
                 className={`thumb ${activeImage === img ? "active" : ""}`}
                 onClick={() => setActiveImage(img)}
               >
-                <img src={img} alt={`${room.name} ${i}`} />
+                <Image
+                  src={img}
+                  alt={`${room.name} ${i + 1}`}
+                  width={120}
+                  height={90}
+                  quality={70}
+                  className="room-thumb-img"
+                />
               </button>
             ))}
           </div>

@@ -20,7 +20,7 @@ export default function RestaurantPage() {
   }, []);
 
   if (!data) {
-    return <p style={{ padding: 120 }}>Loading…</p>;
+    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center" }}>Loading…</p>;
   }
 
   const { dishes, ambience } = data;
