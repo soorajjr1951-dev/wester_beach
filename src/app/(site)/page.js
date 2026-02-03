@@ -1,5 +1,7 @@
 "use client";
+
 import Link from "next/link";
+import Image from "next/image";
 import "./home.css";
 import useScrollReveal from "../hooks/useScrollReveal";
 
@@ -11,11 +13,16 @@ export default function HomePage() {
       {/* HERO */}
       <section className="hero">
         <div className="hero-media">
-          <img
+          <Image
             src="https://cms.westernbeachventures.com/uploads/hero_lighthouse_4k_3840x2160_d09615a032.png"
             alt="Kovalam Lighthouse"
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
           />
         </div>
+
         <div className="hero-overlay" />
 
         <div className="hero-content" data-animate>
@@ -58,10 +65,12 @@ export default function HomePage() {
           </div>
 
           <div className="intro-image" data-animate="right">
-            <img
+            <Image
               src="https://images.unsplash.com/photo-1630632496226-6c862fb7ab24?q=80&w=687&auto=format&fit=crop"
               alt="Wellness Retreat"
-              loading="lazy"
+              width={520}
+              height={420}
+              sizes="(max-width: 768px) 100vw, 520px"
             />
           </div>
         </div>
@@ -92,8 +101,13 @@ export default function HomePage() {
             className="chapter-card"
             data-animate="up"
           >
-            <img src={item.img} alt={item.title}
-            loading="lazy" />
+            <Image
+              src={item.img}
+              alt={item.title}
+              width={420}
+              height={520}
+              sizes="(max-width: 768px) 100vw, 420px"
+            />
             <div className="chapter-overlay">
               <h3>{item.title}</h3>
             </div>

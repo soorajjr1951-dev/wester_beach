@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import "./restaurant.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import { getRestaurantContent } from "../../lib/restaurant";
@@ -26,11 +27,19 @@ export default function RestaurantPage() {
 
   return (
     <main className="restaurant-page">
-      {/* HERO */}
+      {/* ================= HERO ================= */}
       <section className="restaurant-hero">
         <div className="restaurant-hero-media">
-          <img src="https://cms.westernbeachventures.com/uploads/DSC_03927_50c81bff50.JPG" alt="Beachside Restaurant" />
+          <Image
+            src="https://cms.westernbeachventures.com/uploads/DSC_03927_50c81bff50.JPG"
+            alt="Beachside Restaurant"
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: "cover" }}
+          />
         </div>
+
         <div className="restaurant-hero-overlay"></div>
 
         <div className="restaurant-hero-content" data-animate>
@@ -46,7 +55,7 @@ export default function RestaurantPage() {
         </div>
       </section>
 
-      {/* DISHES */}
+      {/* ================= DISHES ================= */}
       {dishes.length > 0 && (
         <section className="restaurant-dishes">
           <header data-animate>
@@ -57,7 +66,14 @@ export default function RestaurantPage() {
           <div className="dish-grid">
             {dishes.map((dish, i) => (
               <div key={i} className="dish-card" data-animate>
-                <img src={dish.image} alt={dish.name} />
+                <Image
+                  src={dish.image}
+                  alt={dish.name}
+                  width={400}
+                  height={300}
+                  quality={70}
+                  loading="lazy"
+                />
                 <div className="dish-info">
                   <h4>{dish.name}</h4>
                   <span>₹{dish.price}</span>
@@ -68,7 +84,7 @@ export default function RestaurantPage() {
         </section>
       )}
 
-      {/* AMBIENCE */}
+      {/* ================= AMBIENCE ================= */}
       {ambience.length > 0 && (
         <section className="restaurant-ambience">
           <div className="ambience-grid">
@@ -83,7 +99,15 @@ export default function RestaurantPage() {
 
             <div className="ambience-images" data-animate="right">
               {ambience.map((img, i) => (
-                <img key={i} src={img} alt={`Dining view ${i + 1}`} />
+                <Image
+                  key={i}
+                  src={img}
+                  alt={`Dining view ${i + 1}`}
+                  width={420}
+                  height={300}
+                  quality={70}
+                  loading="lazy"
+                />
               ))}
             </div>
           </div>
