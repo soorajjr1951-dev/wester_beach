@@ -46,6 +46,10 @@ export default function SpaPage() {
     "Hello,\n\nI would like to book an Ayurvedic doctor consultation."
   )}`;
 
+  const featureWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    "Hello,\n\nI would like to book your featured treatment."
+  )}`;
+
   return (
     <main className="spa-page">
       {/* HERO */}
@@ -160,6 +164,9 @@ export default function SpaPage() {
           <span>Signature Therapy</span>
           <h2>{feature.title}</h2>
           <p>{feature.description}</p>
+          <a href={featureWhatsapp} target="_blank" rel="noreferrer">
+                <button>Book Treatment</button>
+              </a>
         </div>
       </section>
     </main>

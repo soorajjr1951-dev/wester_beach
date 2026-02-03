@@ -297,6 +297,19 @@
   color: #666;
 }
 
+.feature-text button{
+  width: 100%;
+  padding: 18px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-radius: 18px;
+  background: #02833a;
+  color: white;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
 .feature-icons {
   display: flex;
   gap: 32px;
@@ -409,6 +422,10 @@
 
   .spa-hero {
     padding-top: 0px;
+  }
+
+  .feature-image img{
+    height: 400px;
   }
 }
 
