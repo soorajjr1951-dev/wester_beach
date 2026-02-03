@@ -37,8 +37,7 @@ export default function HomePage() {
 
         {/* BOOKING BAR */}
         <div className="booking-bar">
-          <div className="booking-item">Check In</div>
-          <div className="booking-item">And Enjoy</div>
+          <div className="booking-item">Check In And Enjoy</div>
 
           <Link href="/rooms" className="booking-go">
             Go
