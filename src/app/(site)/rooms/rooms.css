@@ -140,6 +140,10 @@
     gap: 16px;
   }
 
+  .room-card{
+    height: 260px;
+  }
+
   .room-card-image img {
     height: 180px;
   }
