@@ -16,6 +16,13 @@ export default function SpaPage() {
   const [services, setServices] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
+  useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
   // 🔥 STATIC FEATURE (NO STRAPI DEPENDENCY)
   const feature = getSpaFeature();
 
@@ -41,7 +48,7 @@ export default function SpaPage() {
   }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello,\n\nI would like to book an Ayurvedic doctor consultation."
+    "Hello,\n\nI would like to book an Ayurvedic doctor consultation.",
   )}`;
 
   return (

@@ -15,6 +15,17 @@ export default function RoomsPage() {
   const [sortOrder, setSortOrder] = useState("LOW_HIGH");
 
   useEffect(() => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, []);
+
+  useEffect(() => {
     async function fetchRooms() {
       const data = await getRooms();
       setRooms(data);
@@ -31,7 +42,7 @@ export default function RoomsPage() {
     }
 
     return list.sort((a, b) =>
-      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price
+      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price,
     );
   }, [rooms, filterType, sortOrder]);
 

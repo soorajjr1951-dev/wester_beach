@@ -14,6 +14,10 @@ export default function SpaDetailPage() {
   const [activeImage, setActiveImage] = useState(null);
 
   useEffect(() => {
+  window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+}, []);
+
+  useEffect(() => {
     if (!slug) return;
 
     async function load() {
