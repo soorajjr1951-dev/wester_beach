@@ -466,3 +466,24 @@
 .spa-feature::before {
   display: none;
 }
+
+@media (max-width: 640px) {
+  .tab-header {
+    justify-content: flex-start;
+    gap: 32px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    margin-bottom: 60px;
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .tab-header::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
+  }
+
+  .tab-header button {
+    white-space: nowrap;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+  }
+}
