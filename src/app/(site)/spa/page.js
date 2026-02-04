@@ -39,16 +39,31 @@ export default function SpaPage() {
   useScrollReveal([activeTab, services.length]);
 
   if (!loaded) {
-    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading spa…</p>;
+    return (
+      <p
+        style={{
+          padding: 120,
+          color: "#02833a",
+          fontWeight: "bolder",
+          textAlign: "center",
+        }}
+      >
+        Loading spa…
+      </p>
+    );
   }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello,\n\nI would like to book an Ayurvedic doctor consultation."
+    "Hello,\n\nI would like to book an Ayurvedic doctor consultation.",
   )}`;
 
   const featureWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book your ${feature.title} treatment.`
+    `Hello,\n\nI would like to book your ${feature.title} treatment.`,
   )}`;
+
+  const ritualServices = services.filter((s) => s.category !== "Beauty Care");
+
+  const beautyServices = services.filter((s) => s.category === "Beauty Care");
 
   return (
     <main className="spa-page">
@@ -66,13 +81,15 @@ export default function SpaPage() {
       {/* TABS */}
       <section className="spa-tabs" data-animate>
         <div className="tab-header">
-          {["Rituals", "Consult"].map((tab) => (
+          {["Rituals", "Beauty", "Consult"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
               className={activeTab === tab ? "active" : ""}
             >
-              {tab === "Rituals" ? "Healing Rituals" : "Dr. Consultation"}
+              {tab === "Rituals" && "Healing Rituals"}
+              {tab === "Beauty" && "Beauty Care"}
+              {tab === "Consult" && "Dr. Consultation"}
             </button>
           ))}
         </div>
@@ -84,7 +101,7 @@ export default function SpaPage() {
               <p style={{ opacity: 0.7 }}>No treatments available</p>
             )}
 
-            {services.map((service) => (
+            {ritualServices.map((service) => (
               <div key={service.id} className="ritual-card" data-animate>
                 <div className="ritual-head">
                   <div>
@@ -102,6 +119,40 @@ export default function SpaPage() {
                     <Droplets size={16} />
                     <Wind size={16} />
                   </div>
+                  <Link href={`/spa/${service.slug}`} className="ritual-btn">
+                    View Treatment →
+                  </Link>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* BEAUTY CARE */}
+        {activeTab === "Beauty" && (
+          <div className="ritual-grid">
+            {beautyServices.length === 0 && (
+              <p style={{ opacity: 0.7 }}>No beauty treatments available</p>
+            )}
+
+            {beautyServices.map((service) => (
+              <div key={service.id} className="ritual-card" data-animate>
+                <div className="ritual-head">
+                  <div>
+                    <span>{service.category}</span>
+                    <h3>{service.name}</h3>
+                  </div>
+                  <strong>₹{service.price}</strong>
+                </div>
+
+                <p>{service.description}</p>
+
+                <div className="ritual-footer">
+                  <div className="ritual-icons">
+                    <Sparkles size={16} />
+                    <Droplets size={16} />
+                  </div>
+
                   <Link href={`/spa/${service.slug}`} className="ritual-btn">
                     View Treatment →
                   </Link>
@@ -165,8 +216,8 @@ export default function SpaPage() {
           <h2>{feature.title}</h2>
           <p>{feature.description}</p>
           <a href={featureWhatsapp} target="_blank" rel="noreferrer">
-                <button>Book Treatment</button>
-              </a>
+            <button>Book Treatment</button>
+          </a>
         </div>
       </section>
     </main>
