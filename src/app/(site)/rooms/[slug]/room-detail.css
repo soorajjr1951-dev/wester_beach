@@ -66,7 +66,7 @@
 
 .thumb img {
   width: 100%;
-  height: 120px;
+  height: 220px;
   object-fit: cover;
   scale: 1.2;
 }
@@ -167,4 +167,11 @@
   .room-gallery-thumbs {
     grid-template-columns: repeat(2, 1fr);
   }
+
+  .thumb img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  scale: 1.2;
+}
 }
