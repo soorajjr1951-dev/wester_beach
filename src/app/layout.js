@@ -16,7 +16,7 @@ export const metadata = {
     template: "%s | Western Beach Ventures",
   },
   description:
-    "Luxury beach resort in Kerala offering premium rooms, ayurvedic spa, and coastal dining.",
+    "Luxury beach resort in Kerala offering premium rooms, ayurvedic spa, and dining.",
 };
 
 
