@@ -36,7 +36,7 @@ export default function RoomDetailPage() {
   }
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
+    `Hello,\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
   )}`;
 
   return (

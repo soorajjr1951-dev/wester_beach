@@ -4,7 +4,14 @@ import Link from "next/link";
 import { Waves, Instagram, Facebook, Phone } from "lucide-react";
 import "./footer.css";
 
+const WHATSAPP_NUMBER = "8089211075";
+
 export default function Footer() {
+
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+    `Hello,\nI would like to know more about the resort.`
+  )}`;
+
   return (
     <footer className="footer">
       <div className="footer-container">
@@ -33,7 +40,7 @@ export default function Footer() {
               <a href="#">
                 <Facebook />
               </a>
-              <a href="#">
+              <a href={whatsappUrl}>
                 <Phone />
               </a>
             </div>

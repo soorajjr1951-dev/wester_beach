@@ -54,11 +54,11 @@ export default function SpaPage() {
   }
 
   const consultWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello,\n\nI would like to book an Ayurvedic doctor consultation.",
+    "Hello,\nI would like to book an Ayurvedic doctor consultation.",
   )}`;
 
   const featureWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book your ${feature.title} treatment.`,
+    `Hello,\nI would like to book your ${feature.title} treatment.`,
   )}`;
 
   const ritualServices = services.filter((s) => s.category !== "Beauty Care");
