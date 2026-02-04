@@ -7,7 +7,7 @@ import useScrollReveal from "../../../hooks/useScrollReveal";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import "./spa-detail.css";
 
-const WHATSAPP_NUMBER = "8129942409";
+const WHATSAPP_NUMBER = "8089211075";
 
 export default function SpaDetailPage() {
   useScrollToTop();
@@ -37,7 +37,7 @@ export default function SpaDetailPage() {
   }
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\n\nI would like to book the *${spa.name}* treatment.`
+    `Hello,\n\nI would like to book the ${spa.name} treatment.`
   )}`;
 
   return (

@@ -9,7 +9,7 @@ import Link from "next/link";
 import { getSpaServices, getSpaFeature } from "../../lib/spa";
 import useScrollToTop from "@/app/hooks/useScrollToTop";
 
-const WHATSAPP_NUMBER = "8129942409";
+const WHATSAPP_NUMBER = "8089211075";
 
 export default function SpaPage() {
   useScrollToTop();
@@ -47,7 +47,7 @@ export default function SpaPage() {
   )}`;
 
   const featureWhatsapp = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    "Hello,\n\nI would like to book your featured treatment."
+    `Hello,\n\nI would like to book your ${feature.title} treatment.`
   )}`;
 
   return (
