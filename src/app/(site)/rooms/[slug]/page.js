@@ -8,7 +8,7 @@ import useScrollReveal from "../../../hooks/useScrollReveal";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import "./room-detail.css";
 
-const WHATSAPP_NUMBER = "+91 8089211075";
+const WHATSAPP_NUMBER = "8089211075";
 
 export default function RoomDetailPage() {
   useScrollToTop();
