@@ -14,7 +14,7 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-media">
           <Image
-            src="https://cms.westernbeachventures.com/uploads/aerial_view_sea_by_mountain_jpg_8ba3ee1603.jpeg"
+            src="https://cms.westernbeachventures.com/uploads/asxx_jpg_8ac858a4b3.jpeg"
             alt="Kovalam Lighthouse"
             fill
             priority
