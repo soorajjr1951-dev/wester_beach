@@ -128,7 +128,7 @@ export default function HomePage() {
           </div>
           <div>
             <span>CONTACT</span>
-            <p>inquiry@westernbeach.in</p>
+            <p>westernbeachresort2025@gmail.com</p>
           </div>
           <div>
             <span>FOLLOW</span>
