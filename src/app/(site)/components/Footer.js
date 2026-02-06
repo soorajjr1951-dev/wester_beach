@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Waves, Instagram, Facebook, Phone ,  } from "lucide-react";
+import { Waves, Instagram, Facebook, Phone } from "lucide-react";
 import "./footer.css";
 
 const WHATSAPP_NUMBER = "8089211075";
@@ -34,12 +34,12 @@ export default function Footer() {
             </h4>
 
             <div className="socials">
-              <a href="#">
+              {/* <a href="#">
                 <Instagram />
               </a>
               <a href="#">
                 <Facebook />
-              </a>
+              </a> */}
               <a href={whatsappUrl}>
                 <Phone />
               </a>
