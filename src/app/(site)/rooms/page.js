@@ -33,14 +33,25 @@ export default function RoomsPage() {
     }
 
     return list.sort((a, b) =>
-      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price
+      sortOrder === "LOW_HIGH" ? a.price - b.price : b.price - a.price,
     );
   }, [rooms, filterType, sortOrder]);
 
   useScrollReveal([visibleRooms.length, filterType, sortOrder]);
 
   if (loading) {
-    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading rooms…</p>;
+    return (
+      <p
+        style={{
+          padding: 120,
+          color: "#02833a",
+          fontWeight: "bolder",
+          textAlign: "center",
+        }}
+      >
+        Loading rooms…
+      </p>
+    );
   }
 
   return (
@@ -111,9 +122,9 @@ export default function RoomsPage() {
 
               <div className="room-card-body">
                 <h3>{room.name}</h3>
-                <p>{room.short_description}</p>
+                <span>₹{room.price}</span>
                 <div className="room-card-footer">
-                  <span>₹{room.price}</span>
+                  <p>{room.short_description}</p>
                   <span className="arrow">→</span>
                 </div>
               </div>

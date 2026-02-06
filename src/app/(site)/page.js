@@ -14,7 +14,7 @@ export default function HomePage() {
       <section className="hero">
         <div className="hero-media">
           <Image
-            src="https://cms.westernbeachventures.com/uploads/hero_lighthouse_4k_3840x2160_d09615a032.png"
+            src="https://cms.westernbeachventures.com/uploads/aerial_view_sea_by_mountain_jpg_8ba3ee1603.jpeg"
             alt="Kovalam Lighthouse"
             fill
             priority
@@ -64,7 +64,7 @@ export default function HomePage() {
 
           <div className="intro-image" data-animate="right">
             <Image
-              src="https://images.unsplash.com/photo-1630632496226-6c862fb7ab24?q=80&w=687&auto=format&fit=crop"
+              src="https://cms.westernbeachventures.com/uploads/attractive_girl_sunglasses_hat_lies_warm_sand_jpg_ae2417a638.jpeg"
               alt="Wellness Retreat"
               width={520}
               height={420}
