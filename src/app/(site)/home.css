@@ -1,7 +1,7 @@
 /* =========================
    HERO
 ========================= */
-*{
+* {
   margin: 0;
 }
 
@@ -31,9 +31,9 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: radial-gradient(
-    circle at center,
-    rgba(0, 0, 0, 0.35) 0%,
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 20%,
     rgba(50, 187, 255, 0.138) 30%,
     rgba(40, 183, 255, 0.17) 55%,
     rgba(40, 175, 243, 0.393) 70%
@@ -67,7 +67,6 @@
   font-weight: 300;
   line-height: 0.95;
 }
-
 
 /* SCROLL */
 .scroll-indicator {
@@ -113,8 +112,6 @@
   justify-content: center;
   text-decoration: none;
 }
-
-
 
 /* =========================
    INTRO
@@ -168,7 +165,6 @@
   border-radius: 40px;
 }
 
-
 /* =========================
    CHAPTERS
 ========================= */
@@ -212,7 +208,6 @@
   color: white;
 }
 
-
 /* =========================
    CONTACT
 ========================= */
@@ -243,12 +238,11 @@
   opacity: 0.6;
 }
 
-
 @media (max-width: 900px) {
   .home-wrapper {
-  width: 100%;
-  overflow-x: hidden;
-}
+    width: 100%;
+    overflow-x: hidden;
+  }
 
   .intro-grid,
   .chapters,
@@ -320,7 +314,7 @@
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 5;          /* ✅ THIS FIXES IT */
+  z-index: 5; /* ✅ THIS FIXES IT */
   pointer-events: auto;
 }
 

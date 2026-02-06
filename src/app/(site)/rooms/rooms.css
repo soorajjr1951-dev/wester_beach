@@ -109,7 +109,11 @@
   color: #004e64;
 }
 
-.room-card-body p {
+.room-card-body span {
+  font-weight: bold;
+}
+
+.room-card-footer p {
   font-size: 14px;
   color: #666;
   margin: 12px 0;
@@ -156,7 +160,7 @@
     font-size: 16px;
   }
 
-  .room-card-body p {
+  .room-card-footer p {
     font-size: 12px;
   }
 }
