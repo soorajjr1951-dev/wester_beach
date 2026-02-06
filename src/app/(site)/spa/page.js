@@ -9,7 +9,7 @@ import Link from "next/link";
 import { getSpaServices, getSpaFeature } from "../../lib/spa";
 import useScrollToTop from "@/app/hooks/useScrollToTop";
 
-const WHATSAPP_NUMBER = "8089211075";
+const WHATSAPP_NUMBER = "+91 8089211075";
 
 export default function SpaPage() {
   useScrollToTop();
@@ -18,7 +18,7 @@ export default function SpaPage() {
   const [services, setServices] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
-  // 🔥 STATIC FEATURE (LOCAL / LIB)
+  //   STATIC FEATURE (LOCAL / LIB)
   const feature = getSpaFeature();
 
   useEffect(() => {

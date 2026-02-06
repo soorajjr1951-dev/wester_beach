@@ -8,7 +8,7 @@ import useScrollReveal from "../../../hooks/useScrollReveal";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import "./room-detail.css";
 
-const WHATSAPP_NUMBER = "8089211075";
+const WHATSAPP_NUMBER = "+91 8089211075";
 
 export default function RoomDetailPage() {
   useScrollToTop();
@@ -16,7 +16,7 @@ export default function RoomDetailPage() {
   const { slug } = useParams();
   const [room, setRoom] = useState(null);
 
-  // 🔥 INDEX BASED STATE
+  //  INDEX BASED STATE
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
 
@@ -36,12 +36,12 @@ export default function RoomDetailPage() {
     fetchRoom();
   }, [slug]);
 
-  // 🔥 Lock body scroll
+  //   Lock body scroll
   useEffect(() => {
     document.body.style.overflow = fullscreenOpen ? "hidden" : "auto";
   }, [fullscreenOpen]);
 
-  // 🔥 Keyboard navigation
+  //   Keyboard navigation
   useEffect(() => {
     const onKeyDown = (e) => {
       if (!fullscreenOpen) return;
@@ -82,13 +82,13 @@ export default function RoomDetailPage() {
     setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // 🔥 Mouse wheel
+  //   Mouse wheel
   const handleWheel = (e) => {
     if (e.deltaY > 0) nextImage();
     else prevImage();
   };
 
-  // 🔥 Touch swipe
+  //   Touch swipe
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };

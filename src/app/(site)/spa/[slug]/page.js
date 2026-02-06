@@ -7,7 +7,7 @@ import useScrollReveal from "../../../hooks/useScrollReveal";
 import useScrollToTop from "../../../hooks/useScrollToTop";
 import "./spa-detail.css";
 
-const WHATSAPP_NUMBER = "8089211075";
+const WHATSAPP_NUMBER = "+91 8089211075";
 
 export default function SpaDetailPage() {
   useScrollToTop();
@@ -15,7 +15,7 @@ export default function SpaDetailPage() {
   const { slug } = useParams();
   const [spa, setSpa] = useState(null);
 
-  // 🔥 INDEX-BASED STATE
+  //   INDEX-BASED STATE
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
 
@@ -36,12 +36,12 @@ export default function SpaDetailPage() {
     load();
   }, [slug]);
 
-  // 🔥 Prevent body scroll in fullscreen
+  //   Prevent body scroll in fullscreen
   useEffect(() => {
     document.body.style.overflow = fullscreenOpen ? "hidden" : "auto";
   }, [fullscreenOpen]);
 
-  // 🔥 Keyboard controls
+  //   Keyboard controls
   useEffect(() => {
     const onKeyDown = (e) => {
       if (!fullscreenOpen) return;
@@ -68,18 +68,16 @@ export default function SpaDetailPage() {
   };
 
   const prevImage = () => {
-    setActiveIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
+    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
-  // 🔥 Mouse wheel scroll
+  //   Mouse wheel scroll
   const handleWheel = (e) => {
     if (e.deltaY > 0) nextImage();
     else prevImage();
   };
 
-  // 🔥 Touch swipe
+  //   Touch swipe
   const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
   };
@@ -92,7 +90,7 @@ export default function SpaDetailPage() {
   };
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\nI would like to book the ${spa.name} treatment.`
+    `Hello,\nI would like to book the ${spa.name} treatment.`,
   )}`;
 
   return (
@@ -170,10 +168,7 @@ export default function SpaDetailPage() {
             className="spa-lightbox-image"
             onClick={(e) => e.stopPropagation()}
           >
-            <img
-              src={images[activeIndex]}
-              alt={spa.name}
-            />
+            <img src={images[activeIndex]} alt={spa.name} />
             <div className="spa-lightbox-counter">
               {activeIndex + 1} / {images.length}
             </div>
