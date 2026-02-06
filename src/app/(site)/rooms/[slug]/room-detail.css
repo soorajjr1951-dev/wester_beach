@@ -4,6 +4,7 @@
 .room-detail-page {
   background: #f6efe4;
   padding: 160px 40px;
+  overflow-x: hidden;
 }
 
 /* =========================
@@ -14,71 +15,99 @@
   margin: auto;
   display: grid;
   grid-template-columns: 1.1fr;
-  gap: 100px;
-  align-items: center;
+  gap: 80px;
+  align-items: start;
 }
 
 /* =========================
-   GALLERY
+   GALLERY LAYOUT (AMAZON STYLE)
 ========================= */
-.room-gallery {
+.room-gallery.horizontal {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+/* =========================
+   THUMBNAILS (LEFT COLUMN)
+========================= */
+.room-gallery-thumbs.vertical {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 12px;
+  max-height: calc(100vh - 260px); /* 🔥 fits viewport */
+  overflow-y: auto;
+  padding-right: 6px;
 }
 
-.room-gallery-main {
-  width: 100%;
-  height: 520px;
-  border-radius: 48px;
-  overflow: hidden;
-  box-shadow: 0 40px 80px rgba(0,0,0,0.25);
+/* scrollbar */
+.room-gallery-thumbs.vertical::-webkit-scrollbar {
+  width: 4px;
 }
 
-.room-gallery-main img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 1.5s ease;
-}
-
-.room-gallery-main:hover img {
-  transform: scale(1.05);
-}
-
-/* THUMBNAILS */
-.room-gallery-thumbs {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+.room-gallery-thumbs.vertical::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.25);
+  border-radius: 10px;
 }
 
 .thumb {
-  border: none;
-  background: none;
-  padding: 0;
-  border-radius: 20px;
-  overflow: hidden;
+  border: 1px solid transparent;
+  background: white;
+  padding: 6px;
+  border-radius: 12px;
   cursor: pointer;
   opacity: 0.6;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transition: all 0.25s ease;
 }
 
 .thumb img {
   width: 100%;
-  height: 220px;
+  height: 80px;
   object-fit: cover;
-  scale: 1.2;
+  border-radius: 8px;
 }
 
 .thumb:hover {
   opacity: 1;
-  transform: translateY(-2px);
+  border-color: #ccc;
 }
 
 .thumb.active {
   opacity: 1;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+  border-color: #02833a;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+/* =========================
+   MAIN IMAGE (RIGHT)
+========================= */
+.room-gallery-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+  /* 🔥 THIS IS THE KEY FIX */
+  max-height: calc(100vh - 260px);
+  width: 100%;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #f6efe4;
+  cursor: zoom-in;
+}
+
+.room-gallery-main img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain; /* 🔥 full image, no crop */
+  transition: transform 0.4s ease;
+}
+
+.room-gallery-main:hover img {
+  transform: scale(1.02);
 }
 
 /* =========================
@@ -142,38 +171,54 @@
 }
 
 /* =========================
-   RESPONSIVE
+   RESPONSIVE — TABLET
 ========================= */
 @media (max-width: 900px) {
+  .room-detail-page {
+    padding: 120px 24px;
+  }
+
   .room-detail-grid {
-    grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 48px;
+  }
+
+  .room-gallery.horizontal {
+    grid-template-columns: 90px 1fr;
   }
 
   .room-gallery-main {
-    height: 420px;
+    max-height: 60vh;
   }
 
-  .room-gallery-thumbs {
-    grid-template-columns: repeat(3, 1fr);
+  .room-gallery-thumbs.vertical {
+    max-height: 60vh;
   }
 }
 
-@media (max-width: 480px) {
-  .room-gallery-main {
-    height: 300px;
+/* =========================
+   RESPONSIVE — MOBILE
+========================= */
+@media (max-width: 600px) {
+  .room-gallery.horizontal {
+    grid-template-columns: 1fr;
   }
 
-  .room-gallery-thumbs {
-    grid-template-columns: repeat(2, 1fr);
+  .room-gallery-thumbs.vertical {
+    flex-direction: row;
+    max-height: none;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
   }
 
   .thumb img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  scale: 1.2;
-}
+    height: 70px;
+    width: 70px;
+  }
+
+  .room-gallery-main {
+    max-height: 55vh;
+  }
 }
 
 /* =========================

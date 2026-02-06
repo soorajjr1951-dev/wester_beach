@@ -79,9 +79,7 @@ export default function RoomDetailPage() {
   };
 
   const prevImage = () => {
-    setActiveIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
+    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   // 🔥 Mouse wheel
@@ -103,7 +101,7 @@ export default function RoomDetailPage() {
   };
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-    `Hello,\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
+    `Hello,\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`,
   )}`;
 
   return (
@@ -132,8 +130,26 @@ export default function RoomDetailPage() {
           </a>
         </div>
 
-        {/* RIGHT */}
-        <div className="room-gallery">
+        <div className="room-gallery horizontal">
+          {/* THUMBNAILS LEFT */}
+          <div className="room-gallery-thumbs vertical">
+            {images.map((img, i) => (
+              <button
+                key={i}
+                className={`thumb ${i === activeIndex ? "active" : ""}`}
+                onClick={() => setActiveIndex(i)}
+              >
+                <Image
+                  src={img}
+                  alt={`${room.name} ${i + 1}`}
+                  width={100}
+                  height={100}
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* MAIN IMAGE RIGHT */}
           <div
             className="room-gallery-main"
             onClick={() => setFullscreenOpen(true)}
@@ -146,23 +162,6 @@ export default function RoomDetailPage() {
               priority
               className="room-main-img"
             />
-          </div>
-
-          <div className="room-gallery-thumbs">
-            {images.map((img, i) => (
-              <button
-                key={i}
-                className={`thumb ${i === activeIndex ? "active" : ""}`}
-                onClick={() => setActiveIndex(i)}
-              >
-                <Image
-                  src={img}
-                  alt={`${room.name} ${i + 1}`}
-                  width={120}
-                  height={90}
-                />
-              </button>
-            ))}
           </div>
         </div>
       </section>
