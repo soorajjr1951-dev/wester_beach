@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Waves, Instagram, Facebook, Phone } from "lucide-react";
 import "./footer.css";
 
-const WHATSAPP_NUMBER = "+91 8089211075";
+const WHATSAPP_NUMBER = "8089211075";
 
 export default function Footer() {
 
