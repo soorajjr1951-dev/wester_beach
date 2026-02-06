@@ -3,6 +3,16 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import {
+  Tv,
+  Flame,
+  Archive,
+  Sofa,
+  Refrigerator,
+  Coffee,
+  BedDouble,
+} from "lucide-react";
+
 import { getRoomBySlug } from "../../../lib/rooms";
 import useScrollReveal from "../../../hooks/useScrollReveal";
 import useScrollToTop from "../../../hooks/useScrollToTop";
@@ -16,7 +26,6 @@ export default function RoomDetailPage() {
   const { slug } = useParams();
   const [room, setRoom] = useState(null);
 
-  //  INDEX BASED STATE
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreenOpen, setFullscreenOpen] = useState(false);
 
@@ -25,48 +34,24 @@ export default function RoomDetailPage() {
   useEffect(() => {
     if (!slug) return;
 
-    async function fetchRoom() {
+    (async () => {
       const data = await getRoomBySlug(slug);
       if (data) {
         setRoom(data);
         setActiveIndex(0);
       }
-    }
-
-    fetchRoom();
+    })();
   }, [slug]);
 
-  //   Lock body scroll
   useEffect(() => {
     document.body.style.overflow = fullscreenOpen ? "hidden" : "auto";
   }, [fullscreenOpen]);
-
-  //   Keyboard navigation
-  useEffect(() => {
-    const onKeyDown = (e) => {
-      if (!fullscreenOpen) return;
-
-      if (e.key === "Escape") setFullscreenOpen(false);
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
-    };
-
-    window.addEventListener("keydown", onKeyDown);
-    return () => window.removeEventListener("keydown", onKeyDown);
-  }, [fullscreenOpen, room]);
 
   useScrollReveal([room, activeIndex]);
 
   if (!room) {
     return (
-      <p
-        style={{
-          padding: 120,
-          color: "#02833a",
-          fontWeight: "bolder",
-          textAlign: "center",
-        }}
-      >
+      <p style={{ padding: 120, textAlign: "center", fontWeight: "bold" }}>
         Loading room…
       </p>
     );
@@ -74,35 +59,50 @@ export default function RoomDetailPage() {
 
   const images = room.gallery || [];
 
-  const nextImage = () => {
-    setActiveIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevImage = () => {
-    setActiveIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
-
-  //   Mouse wheel
-  const handleWheel = (e) => {
-    if (e.deltaY > 0) nextImage();
-    else prevImage();
-  };
-
-  //   Touch swipe
-  const handleTouchStart = (e) => {
-    touchStartX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = (e) => {
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      diff > 0 ? nextImage() : prevImage();
-    }
-  };
+  const nextImage = () =>
+    setActiveIndex((i) => (i + 1) % images.length);
+  const prevImage = () =>
+    setActiveIndex((i) => (i === 0 ? images.length - 1 : i - 1));
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Hello,\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`,
   )}`;
+
+  /* =========================
+     AMENITIES CONFIG
+  ========================= */
+  const amenitiesConfig = [
+    {
+      key: "tv",
+      label: "Television",
+      icon: <Tv size={18} />,
+    },
+    {
+      key: "geyser",
+      label: "Hot Water",
+      icon: <Flame size={18} />,
+    },
+    {
+      key: "cupboard",
+      label: "Cupboard",
+      icon: <Archive size={18} />,
+    },
+    {
+      key: "sofa",
+      label: "Sofa",
+      icon: <Sofa size={18} />,
+    },
+    {
+      key: "fridge",
+      label: "Refrigerator",
+      icon: <Refrigerator size={18} />,
+    },
+    {
+      key: "kettle",
+      label: "Electric Kettle",
+      icon: <Coffee size={18} />,
+    },
+  ];
 
   return (
     <main className="room-detail-page">
@@ -118,6 +118,34 @@ export default function RoomDetailPage() {
 
           <p>{room.description}</p>
 
+          {/* =========================
+             AMENITIES
+          ========================= */}
+          <div className="room-amenities">
+            <h3>Amenities</h3>
+
+            <ul className="amenities-grid">
+              {/* Bed always shown */}
+              {room.amenities?.bed && (
+                <li>
+                  <BedDouble size={18} />
+                  <span>{room.amenities.bed}</span>
+                </li>
+              )}
+
+              {/* Only AVAILABLE amenities */}
+              {amenitiesConfig.map(
+                ({ key, label, icon }) =>
+                  room.amenities?.[key] === "Available" && (
+                    <li key={key}>
+                      {icon}
+                      <span>{label}</span>
+                    </li>
+                  ),
+              )}
+            </ul>
+          </div>
+
           <div className="room-price">₹{room.price} / night</div>
 
           <a
@@ -130,8 +158,8 @@ export default function RoomDetailPage() {
           </a>
         </div>
 
+        {/* RIGHT */}
         <div className="room-gallery horizontal">
-          {/* THUMBNAILS LEFT */}
           <div className="room-gallery-thumbs vertical">
             {images.map((img, i) => (
               <button
@@ -139,17 +167,11 @@ export default function RoomDetailPage() {
                 className={`thumb ${i === activeIndex ? "active" : ""}`}
                 onClick={() => setActiveIndex(i)}
               >
-                <Image
-                  src={img}
-                  alt={`${room.name} ${i + 1}`}
-                  width={100}
-                  height={100}
-                />
+                <Image src={img} alt="" width={100} height={100} />
               </button>
             ))}
           </div>
 
-          {/* MAIN IMAGE RIGHT */}
           <div
             className="room-gallery-main"
             onClick={() => setFullscreenOpen(true)}
@@ -160,37 +182,22 @@ export default function RoomDetailPage() {
               width={900}
               height={600}
               priority
-              className="room-main-img"
             />
           </div>
         </div>
       </section>
 
-      {/* =========================
-          FULLSCREEN LIGHTBOX
-      ========================= */}
+      {/* LIGHTBOX */}
       {fullscreenOpen && (
-        <div
-          className="room-lightbox"
-          onWheel={handleWheel}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          onClick={() => setFullscreenOpen(false)}
-        >
-          <button
-            className="room-lightbox-close"
-            onClick={() => setFullscreenOpen(false)}
-          >
-            ✕
-          </button>
-
+        <div className="room-lightbox" onClick={() => setFullscreenOpen(false)}>
+          <button className="room-lightbox-close">✕</button>
           <div
             className="room-lightbox-image"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
               src={images[activeIndex]}
-              alt={room.name}
+              alt=""
               fill
               sizes="100vw"
               style={{ objectFit: "contain" }}
@@ -204,3 +211,4 @@ export default function RoomDetailPage() {
     </main>
   );
 }
+

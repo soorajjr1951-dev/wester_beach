@@ -15,6 +15,22 @@ function normalizeRoom(item) {
     short_description: r?.short_description ?? "",
     description: r?.description ?? "",
 
+    // =========================
+    // AMENITIES (FLAT FIELDS)
+    // =========================
+    amenities: {
+      tv: r?.tv ?? "Not available",
+      geyser: r?.geyser ?? "Not available",
+      cupboard: r?.cupboard ?? "Not available",
+      bed: r?.bed ?? "",
+      sofa: r?.sofa ?? "Not available",
+      fridge: r?.fridge ?? "Not available",
+      kettle: r?.kettle ?? "Not available",
+    },
+
+    // =========================
+    // IMAGES
+    // =========================
     preview_image:
       r?.preview_image?.data?.attributes?.url
         ? `${STRAPI_URL}${r.preview_image.data.attributes.url}`
