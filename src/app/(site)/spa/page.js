@@ -9,7 +9,7 @@ import Link from "next/link";
 import { getSpaServices, getSpaFeature } from "../../lib/spa";
 import useScrollToTop from "@/app/hooks/useScrollToTop";
 
-const WHATSAPP_NUMBER = "8089211075";
+const WHATSAPP_NUMBER = "+918089211075";
 
 export default function SpaPage() {
   useScrollToTop();
