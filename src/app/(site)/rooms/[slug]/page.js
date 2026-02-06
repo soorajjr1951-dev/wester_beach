@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { getRoomBySlug } from "../../../lib/rooms";
@@ -11,29 +11,96 @@ import "./room-detail.css";
 const WHATSAPP_NUMBER = "8089211075";
 
 export default function RoomDetailPage() {
-  useScrollToTop(); // ✅ ensures page opens at top
+  useScrollToTop();
 
   const { slug } = useParams();
   const [room, setRoom] = useState(null);
-  const [activeImage, setActiveImage] = useState(null);
+
+  // 🔥 INDEX BASED STATE
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+
+  const touchStartX = useRef(0);
 
   useEffect(() => {
     if (!slug) return;
 
     async function fetchRoom() {
       const data = await getRoomBySlug(slug);
-      setRoom(data);
-      setActiveImage(data?.gallery?.[0] || null);
+      if (data) {
+        setRoom(data);
+        setActiveIndex(0);
+      }
     }
 
     fetchRoom();
   }, [slug]);
 
-  useScrollReveal([room, activeImage]);
+  // 🔥 Lock body scroll
+  useEffect(() => {
+    document.body.style.overflow = fullscreenOpen ? "hidden" : "auto";
+  }, [fullscreenOpen]);
+
+  // 🔥 Keyboard navigation
+  useEffect(() => {
+    const onKeyDown = (e) => {
+      if (!fullscreenOpen) return;
+
+      if (e.key === "Escape") setFullscreenOpen(false);
+      if (e.key === "ArrowRight") nextImage();
+      if (e.key === "ArrowLeft") prevImage();
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [fullscreenOpen, room]);
+
+  useScrollReveal([room, activeIndex]);
 
   if (!room) {
-    return <p style={{ padding: 120 , color:"#02833a" , fontWeight:"bolder", textAlign:"center"}}>Loading room…</p>;
+    return (
+      <p
+        style={{
+          padding: 120,
+          color: "#02833a",
+          fontWeight: "bolder",
+          textAlign: "center",
+        }}
+      >
+        Loading room…
+      </p>
+    );
   }
+
+  const images = room.gallery || [];
+
+  const nextImage = () => {
+    setActiveIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setActiveIndex((prev) =>
+      prev === 0 ? images.length - 1 : prev - 1
+    );
+  };
+
+  // 🔥 Mouse wheel
+  const handleWheel = (e) => {
+    if (e.deltaY > 0) nextImage();
+    else prevImage();
+  };
+
+  // 🔥 Touch swipe
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (e) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? nextImage() : prevImage();
+    }
+  };
 
   const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
     `Hello,\nI would like to book the *${room.name}*.\nPrice: ₹${room.price} per night.`
@@ -42,7 +109,7 @@ export default function RoomDetailPage() {
   return (
     <main className="room-detail-page">
       <section className="room-detail-grid" data-animate>
-        {/* LEFT CONTENT */}
+        {/* LEFT */}
         <div className="room-detail-content">
           <span className="room-category">{room.category}</span>
 
@@ -65,42 +132,76 @@ export default function RoomDetailPage() {
           </a>
         </div>
 
-        {/* RIGHT GALLERY */}
+        {/* RIGHT */}
         <div className="room-gallery">
-          <div className="room-gallery-main">
-            {activeImage && (
-              <Image
-                src={activeImage}
-                alt={room.name}
-                width={900}
-                height={600}
-                quality={75}
-                priority
-                className="room-main-img"
-              />
-            )}
+          <div
+            className="room-gallery-main"
+            onClick={() => setFullscreenOpen(true)}
+          >
+            <Image
+              src={images[activeIndex]}
+              alt={room.name}
+              width={900}
+              height={600}
+              priority
+              className="room-main-img"
+            />
           </div>
 
           <div className="room-gallery-thumbs">
-            {room.gallery?.map((img, i) => (
+            {images.map((img, i) => (
               <button
                 key={i}
-                className={`thumb ${activeImage === img ? "active" : ""}`}
-                onClick={() => setActiveImage(img)}
+                className={`thumb ${i === activeIndex ? "active" : ""}`}
+                onClick={() => setActiveIndex(i)}
               >
                 <Image
                   src={img}
                   alt={`${room.name} ${i + 1}`}
                   width={120}
                   height={90}
-                  quality={70}
-                  className="room-thumb-img"
                 />
               </button>
             ))}
           </div>
         </div>
       </section>
+
+      {/* =========================
+          FULLSCREEN LIGHTBOX
+      ========================= */}
+      {fullscreenOpen && (
+        <div
+          className="room-lightbox"
+          onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+          onClick={() => setFullscreenOpen(false)}
+        >
+          <button
+            className="room-lightbox-close"
+            onClick={() => setFullscreenOpen(false)}
+          >
+            ✕
+          </button>
+
+          <div
+            className="room-lightbox-image"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <Image
+              src={images[activeIndex]}
+              alt={room.name}
+              fill
+              sizes="100vw"
+              style={{ objectFit: "contain" }}
+            />
+            <div className="room-lightbox-counter">
+              {activeIndex + 1} / {images.length}
+            </div>
+          </div>
+        </div>
+      )}
     </main>
   );
 }

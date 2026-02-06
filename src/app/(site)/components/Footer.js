@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Waves, Instagram, Facebook, Phone } from "lucide-react";
+import { Waves, Instagram, Facebook, Phone ,  } from "lucide-react";
 import "./footer.css";
 
 const WHATSAPP_NUMBER = "8089211075";
@@ -72,8 +72,8 @@ export default function Footer() {
               Beach Road, Kovalam
               <br />
               Thiruvananthapuram, Kerala 695527
-              <span className="contact-phone">+91 98765 43210</span>
-              <span className="contact-email">hello@westernbeach.in</span>
+              <span className="contact-phone">+91 80892 11075</span>
+              {/* <span className="contact-email">hello@westernbeach.in</span> */}
             </p>
           </div>
         </div>
