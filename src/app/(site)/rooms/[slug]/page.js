@@ -59,8 +59,7 @@ export default function RoomDetailPage() {
 
   const images = room.gallery || [];
 
-  const nextImage = () =>
-    setActiveIndex((i) => (i + 1) % images.length);
+  const nextImage = () => setActiveIndex((i) => (i + 1) % images.length);
   const prevImage = () =>
     setActiveIndex((i) => (i === 0 ? images.length - 1 : i - 1));
 
@@ -107,8 +106,10 @@ export default function RoomDetailPage() {
   return (
     <main className="room-detail-page">
       <section className="room-detail-grid" data-animate>
-        {/* LEFT */}
-        <div className="room-detail-content">
+        {/* =========================
+      LEFT SIDE (TITLE + GALLERY)
+  ========================= */}
+        <div className="room-left">
           <span className="room-category">{room.category}</span>
 
           <h1>
@@ -116,16 +117,45 @@ export default function RoomDetailPage() {
             <em>{room.name.split(" ").slice(1).join(" ")}</em>
           </h1>
 
-          <p>{room.description}</p>
+          <div className="room-gallery horizontal">
+            <div className="room-gallery-thumbs vertical">
+              {images.map((img, i) => (
+                <button
+                  key={i}
+                  className={`thumb ${i === activeIndex ? "active" : ""}`}
+                  onClick={() => setActiveIndex(i)}
+                >
+                  <Image src={img} alt="" width={100} height={100} />
+                </button>
+              ))}
+            </div>
 
-          {/* =========================
-             AMENITIES
-          ========================= */}
+            <div
+              className="room-gallery-main"
+              onClick={() => setFullscreenOpen(true)}
+            >
+              <Image
+                src={images[activeIndex]}
+                alt={room.name}
+                width={900}
+                height={600}
+                priority
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* =========================
+      RIGHT SIDE (DETAILS)
+  ========================= */}
+        <div className="room-right">
+          <p className="room-description">{room.description}</p>
+
+          {/* AMENITIES */}
           <div className="room-amenities">
             <h3>Amenities</h3>
 
             <ul className="amenities-grid">
-              {/* Bed always shown */}
               {room.amenities?.bed && (
                 <li>
                   <BedDouble size={18} />
@@ -133,7 +163,6 @@ export default function RoomDetailPage() {
                 </li>
               )}
 
-              {/* Only AVAILABLE amenities */}
               {amenitiesConfig.map(
                 ({ key, label, icon }) =>
                   room.amenities?.[key] === "Available" && (
@@ -156,34 +185,6 @@ export default function RoomDetailPage() {
           >
             Book via WhatsApp →
           </a>
-        </div>
-
-        {/* RIGHT */}
-        <div className="room-gallery horizontal">
-          <div className="room-gallery-thumbs vertical">
-            {images.map((img, i) => (
-              <button
-                key={i}
-                className={`thumb ${i === activeIndex ? "active" : ""}`}
-                onClick={() => setActiveIndex(i)}
-              >
-                <Image src={img} alt="" width={100} height={100} />
-              </button>
-            ))}
-          </div>
-
-          <div
-            className="room-gallery-main"
-            onClick={() => setFullscreenOpen(true)}
-          >
-            <Image
-              src={images[activeIndex]}
-              alt={room.name}
-              width={900}
-              height={600}
-              priority
-            />
-          </div>
         </div>
       </section>
 
@@ -211,4 +212,3 @@ export default function RoomDetailPage() {
     </main>
   );
 }
-
