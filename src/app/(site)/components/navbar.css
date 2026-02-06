@@ -54,11 +54,11 @@
 
 /* HERO COLORS */
 .navbar-transparent .brand-word.green {
-  color: #02833a;
+  color: #00b64f;
 }
 
 .navbar-transparent .brand-word.blue {
-  color: #0274c1;
+  color: #0099ff;
 }
 
 .navbar-transparent .brand-word.dark {
@@ -75,7 +75,7 @@
 }
 
 .navbar-scrolled .brand-word.blue {
-  color: #0274c1;
+  color: #0099ff;
 }
 
 .navbar-scrolled .brand-word.dark {
