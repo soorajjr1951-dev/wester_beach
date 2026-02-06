@@ -27,7 +27,6 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, [isHome]);
 
-  // Lock body scroll when menu open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "auto";
   }, [menuOpen]);
@@ -72,7 +71,7 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* MOBILE MENU OVERLAY */}
+      {/* MOBILE MENU */}
       <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
         <button
           className="close-btn"
@@ -92,7 +91,11 @@ export default function Navbar() {
           <Link href="/restaurant" onClick={() => setMenuOpen(false)}>
             Restaurant
           </Link>
-          <Link href="/rooms" onClick={() => setMenuOpen(false)} className="mobile-cta">
+          <Link
+            href="/rooms"
+            onClick={() => setMenuOpen(false)}
+            className="mobile-cta"
+          >
             Book Your Stay
           </Link>
         </div>

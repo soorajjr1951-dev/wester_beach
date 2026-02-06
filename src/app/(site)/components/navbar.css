@@ -1,19 +1,23 @@
-/* BASE */
+/* =========================
+   BASE
+========================= */
 .navbar-main {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
-  transition: all 0.6s ease;
+  transition: background 0.6s ease, padding 0.4s ease, box-shadow 0.4s ease;
 }
 
+/* TRANSPARENT (HOME HERO) */
 .navbar-transparent {
   background: transparent;
   padding: 34px 0;
   color: white;
 }
 
+/* SCROLLED / INNER PAGES */
 .navbar-scrolled {
   background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(12px);
@@ -31,7 +35,9 @@
   justify-content: space-between;
 }
 
-/* BRAND */
+/* =========================
+   BRAND
+========================= */
 .navbar-brand {
   display: flex;
   align-items: center;
@@ -41,59 +47,64 @@
   letter-spacing: 0.3px;
 }
 
-.brand-word.green {
+.brand-word,
+.brand-dot {
+  transition: color 0.4s ease;
+}
+
+/* HERO COLORS */
+.navbar-transparent .brand-word.green {
   color: #02833a;
 }
 
-.brand-word.blue {
+.navbar-transparent .brand-word.blue {
   color: #0274c1;
 }
 
-.brand-word.dark {
+.navbar-transparent .brand-word.dark {
+  color: rgb(236, 236, 236);
+}
+
+.navbar-transparent .brand-dot {
+  color: #c9a66b;
+}
+
+/* SCROLLED COLORS */
+.navbar-scrolled .brand-word.green {
+  color: #02833a;
+}
+
+.navbar-scrolled .brand-word.blue {
+  color: #0274c1;
+}
+
+.navbar-scrolled .brand-word.dark {
   color: #0b1b12;
 }
 
-.brand-dot {
-  margin: 0 6px;
-  font-size: 18px;
-  color: #c9a66b; /* sand accent */
+.navbar-scrolled .brand-dot {
+  color: #c9a66b;
 }
 
-/* LINKS */
+/* =========================
+   LINKS
+========================= */
 .navbar-links {
   display: flex;
   align-items: center;
   gap: 28px;
 }
 
-.navbar-links a,
-.navbar-links button {
-  background: none;
-  font-family: var(--font-primary);
-  font-weight: 400;
-  border: none;
-  padding: 0;              /* remove default button padding */
-  margin: 0;
-  color: currentColor;
-
-  font-size: 13px;         /* SAME size */
-  font-weight: 500;        /* SAME weight for all */
-  line-height: 1;
-
+.navbar-links a {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   text-decoration: none;
-  cursor: pointer;
+  color: currentColor;
   position: relative;
 }
 
-
-.navbar-links a,
-.navbar-links button {
-  letter-spacing: 0.04em;
-}
-
-
-.navbar-links a::after,
-.navbar-links button::after {
+.navbar-links a::after {
   content: "";
   position: absolute;
   left: 0;
@@ -104,12 +115,13 @@
   transition: width 0.25s ease;
 }
 
-.navbar-links a:hover::after,
-.navbar-links button:hover::after {
+.navbar-links a:hover::after {
   width: 100%;
 }
 
-/* CTA */
+/* =========================
+   CTA
+========================= */
 .navbar-cta {
   padding: 10px 20px;
   border-radius: 999px;
@@ -126,14 +138,9 @@
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
 }
 
-/* MOBILE */
-@media (max-width: 900px) {
-  .navbar-links {
-    display: none;
-  }
-}
-
-/* HAMBURGER BUTTON */
+/* =========================
+   HAMBURGER
+========================= */
 .hamburger-btn {
   display: none;
   background: none;
@@ -142,7 +149,9 @@
   cursor: pointer;
 }
 
-/* MOBILE MENU OVERLAY */
+/* =========================
+   MOBILE MENU
+========================= */
 .mobile-menu {
   position: fixed;
   inset: 0;
@@ -160,7 +169,6 @@
   transform: translateY(0);
 }
 
-/* CLOSE BUTTON */
 .close-btn {
   position: absolute;
   top: 28px;
@@ -191,7 +199,6 @@
   opacity: 0.7;
 }
 
-/* MOBILE CTA */
 .mobile-cta {
   margin-top: 20px;
   padding: 14px 32px;
@@ -202,7 +209,9 @@
   font-weight: 700;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE
+========================= */
 @media (max-width: 900px) {
   .navbar-links,
   .navbar-cta {
