@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://www.westernbeachventures.com
+
+# Sitemaps
+Sitemap: https://www.westernbeachventures.com/sitemap.xml
