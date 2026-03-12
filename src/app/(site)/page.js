@@ -28,7 +28,7 @@ export default function HomePage() {
         <div className="hero-content" data-animate>
           <p className="hero-tagline">STAY WITH US FEELS LIKE HOME</p>
           <h1 className="hero-title">
-            Experience Unparalleled <br />
+            Experience Unparalleled<br />
             <span>Comfort</span>
           </h1>
         </div>
