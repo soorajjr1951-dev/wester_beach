@@ -8,19 +8,6 @@ import useScrollReveal from "../../hooks/useScrollReveal";
 import { getRooms } from "../../lib/rooms";
 import useScrollToTop from "@/app/hooks/useScrollToTop";
 
-export const metadata = {
-  title: "Rooms & Suites – Western Beach Ventures",
-  description:
-    "Explore AC and Non-AC rooms with sea view options. Thoughtful amenities and modern comforts by the Kovalam coast.",
-  alternates: { canonical: "/rooms" },
-  openGraph: {
-    title: "Rooms & Suites – Western Beach Ventures",
-    description:
-      "Explore AC and Non-AC rooms with sea view options. Thoughtful amenities and modern comforts by the Kovalam coast.",
-    type: "website",
-  },
-};
-
 export default function RoomsPage() {
   useScrollToTop(); // ✅ ONLY THIS (no duplicates)
 

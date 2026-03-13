@@ -18,63 +18,6 @@ export const metadata = {
   },
   description:
     "Luxury beach resort in Kerala offering premium rooms, ayurvedic spa, and dining.",
-  keywords: [
-    "Kerala beach resort",
-    "Kovalam resort",
-    "luxury rooms Kerala",
-    "Ayurvedic spa Kovalam",
-    "beachfront hotel Kerala",
-  ],
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Western Beach Ventures",
-    description:
-      "Luxury beach resort in Kerala offering premium rooms, ayurvedic spa, and dining.",
-    url: "https://www.westernbeachventures.com/",
-    siteName: "Western Beach Ventures",
-    locale: "en_IN",
-    type: "website",
-    images: [
-      {
-        url: "https://cms.westernbeachventures.com/uploads/aerial_view_sea_by_mountain_jpg_8ba3ee1603.jpeg",
-        width: 1200,
-        height: 630,
-        alt: "Western Beach Ventures – Kerala Beach Resort",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    site: "@westernbeachresort",
-    title: "Western Beach Ventures",
-    description:
-      "Luxury beach resort in Kerala offering premium rooms, ayurvedic spa, and dining.",
-    images: [
-      "https://cms.westernbeachventures.com/uploads/aerial_view_sea_by_mountain_jpg_8ba3ee1603.jpeg",
-    ],
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      maxSnippet: -1,
-      maxImagePreview: "large",
-      maxVideoPreview: -1,
-    },
-  },
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
-
-export const viewport = {
-themeColor: "#ffffff",
-width: "device-width",
-initialScale: 1,
 };
 
 export default function RootLayout({ children }) {

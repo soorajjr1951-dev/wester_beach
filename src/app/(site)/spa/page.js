@@ -11,19 +11,6 @@ import useScrollToTop from "@/app/hooks/useScrollToTop";
 
 const WHATSAPP_NUMBER = "+918089211075";
 
-export const metadata = {
-  title: "Ayurvedic Spa – Healing Rituals in Kovalam",
-  description:
-    "Traditional Keralan therapies and beauty care. Book Ayurvedic doctor consultation and signature treatments.",
-  alternates: { canonical: "/spa" },
-  openGraph: {
-    title: "Ayurvedic Spa – Healing Rituals in Kovalam",
-    description:
-      "Traditional Keralan therapies and beauty care. Book Ayurvedic doctor consultation and signature treatments.",
-    type: "website",
-  },
-};
-
 export default function SpaPage() {
   useScrollToTop();
 

@@ -6,19 +6,6 @@ import "./restaurant.css";
 import useScrollReveal from "../../hooks/useScrollReveal";
 import { getRestaurantContent } from "../../lib/restaurant";
 
-export const metadata = {
-  title: "Restaurant – Coastal Dining in Kovalam",
-  description:
-    "Fresh seafood and coastal cuisine inspired by Keralan traditions. Intimate indoor dining at Western Beach Ventures.",
-  alternates: { canonical: "/restaurant" },
-  openGraph: {
-    title: "Restaurant – Coastal Dining in Kovalam",
-    description:
-      "Fresh seafood and coastal cuisine inspired by Keralan traditions. Intimate indoor dining at Western Beach Ventures.",
-    type: "website",
-  },
-};
-
 export default function RestaurantPage() {
   useScrollReveal();
 

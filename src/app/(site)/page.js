@@ -5,24 +5,6 @@ import Image from "next/image";
 import "./home.css";
 import useScrollReveal from "../hooks/useScrollReveal";
 
-export const metadata = {
-  title: "Luxury Beach Resort in Kovalam, Kerala",
-  description:
-    "Stay by the Arabian Sea at Western Beach Ventures – premium rooms, Ayurvedic spa, and ocean-inspired dining.",
-  alternates: { canonical: "/" },
-  openGraph: {
-    title: "Luxury Beach Resort in Kovalam, Kerala",
-    description:
-      "Stay by the Arabian Sea at Western Beach Ventures – premium rooms, Ayurvedic spa, and ocean-inspired dining.",
-    type: "website",
-  },
-  twitter: {
-    title: "Luxury Beach Resort in Kovalam, Kerala",
-    description:
-      "Stay by the Arabian Sea at Western Beach Ventures – premium rooms, Ayurvedic spa, and ocean-inspired dining.",
-  },
-};
-
 export default function HomePage() {
   useScrollReveal();
 
