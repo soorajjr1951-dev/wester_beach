@@ -20,6 +20,28 @@ import "./room-detail.css";
 
 const WHATSAPP_NUMBER = "+918089211075";
 
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }) {
+  const slug = params?.slug;
+  // Build absolute image/canonical using metadataBase from root layout
+  const title = slug
+    ? `${slug.replace(/-/g, " ")}`
+    : "Room";
+  return {
+    title: `${title} – Room Details`,
+    description:
+      "View photos, amenities, and pricing. Book your stay at Western Beach Ventures, Kovalam.",
+    alternates: { canonical: `/rooms/${slug}` },
+    openGraph: {
+      type: "article",
+      title: `${title} – Room Details`,
+      description:
+        "View photos, amenities, and pricing. Book your stay at Western Beach Ventures, Kovalam.",
+    },
+  };
+}
+
 export default function RoomDetailPage() {
   useScrollToTop();
 

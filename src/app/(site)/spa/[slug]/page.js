@@ -9,6 +9,25 @@ import "./spa-detail.css";
 
 const WHATSAPP_NUMBER = "+918089211075";
 
+export const dynamic = "force-dynamic";
+
+export async function generateMetadata({ params }) {
+  const slug = params?.slug;
+  const title = slug ? slug.replace(/-/g, " ") : "Treatment";
+  return {
+    title: `${title} – Spa Treatment`,
+    description:
+      "Ayurvedic treatment details, images, and pricing at Western Beach Ventures, Kovalam.",
+    alternates: { canonical: `/spa/${slug}` },
+    openGraph: {
+      type: "article",
+      title: `${title} – Spa Treatment",
+      description:
+        "Ayurvedic treatment details, images, and pricing at Western Beach Ventures, Kovalam.",
+    },
+  };
+}
+
 export default function SpaDetailPage() {
   useScrollToTop();
 
